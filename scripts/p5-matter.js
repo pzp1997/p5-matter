@@ -55,7 +55,6 @@ PhysicalObject.prototype.show = function() {
 var Barrier = function(x, y, width, height, angle) {
   var shiftedX = x + width / 2;
   var shiftedY = y + height / 2;
-
   var body = Matter.Bodies.rectangle(shiftedX, shiftedY, width, height, {
     isStatic: true,
     angle: angle || 0
@@ -105,8 +104,7 @@ Ball.prototype.getRadius = function() {
 var Block = function(x, y, width, height, angle) {
   var shiftedX = x + width / 2;
   var shiftedY = y + height / 2;
-
-  var body = Bodies.rectangle(shiftedX, shiftedY, width, height, {
+  var body = Matter.Bodies.rectangle(shiftedX, shiftedY, width, height, {
     angle: angle || 0
   });
 
