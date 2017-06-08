@@ -102,7 +102,7 @@ var matter = (function() {
   var Ball = function(x, y, diameter, options) {
     var body = Matter.Bodies.circle(x, y, diameter / 2, options);
     PhysicalObject.call(this, body, diameter, diameter);
-  }
+  };
   Ball.prototype = Object.create(PhysicalObject.prototype);
   Ball.prototype.constructor = Ball;
 
@@ -112,7 +112,7 @@ var matter = (function() {
     rotate(this.getAngle());
     ellipse(0, 0, this.getWidth(), this.getHeight());
     pop();
-  }
+  };
 
   Ball.prototype.getDiameter = Ball.prototype.getWidth;
 
@@ -129,7 +129,7 @@ var matter = (function() {
     var body = Matter.Bodies.rectangle(shiftedX, shiftedY, width, height, options);
 
     PhysicalObject.call(this, body, width, height);
-  }
+  };
   Block.prototype = Object.create(PhysicalObject.prototype);
   Block.prototype.constructor = Block;
 
@@ -137,7 +137,7 @@ var matter = (function() {
     push();
     translate(this.getX(), this.getY());
     rotate(this.getAngle());
-    rectMode(CENTER)
+    rectMode(CENTER);
     rect(0, 0, this.getWidth(), this.getHeight());
     pop();
   };
