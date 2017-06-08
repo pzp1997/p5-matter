@@ -70,6 +70,7 @@ Barrier.prototype.show = function() {
   push();
   translate(this.getX(), this.getY());
   rotate(this.getAngle());
+  rectMode(CENTER);
   rect(0, 0, this.getWidth(), this.getHeight());
   pop();
 };
@@ -118,6 +119,7 @@ Block.prototype.show = function() {
   push();
   translate(this.getX(), this.getY());
   rotate(this.getAngle());
+  rectMode(CENTER)
   rect(0, 0, this.getWidth(), this.getHeight());
   pop();
 };
