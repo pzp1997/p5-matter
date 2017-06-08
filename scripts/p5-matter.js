@@ -133,7 +133,7 @@ var matter = (function() {
   Ball.prototype.getDiameter = Ball.prototype.getWidth;
 
   Ball.prototype.getRadius = function() {
-    this.getDiameter() / 2;
+    return this.getDiameter() / 2;
   };
 
 
