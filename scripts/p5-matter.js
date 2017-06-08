@@ -35,6 +35,21 @@ var matter = (function() {
     return barrier;
   };
 
+  var normalGravity = function() {
+    engine.world.gravity.x = 0;
+    engine.world.gravity.y = 1;
+  };
+
+  var invertedGravity = function() {
+    engine.world.gravity.x = 0;
+    engine.world.gravity.y = -1;
+  }
+
+  var zeroGravity = function() {
+    engine.world.gravity.x = 0;
+    engine.world.gravity.y = 0;
+  }
+
   var forget = function(physicalObject) {
     init(); // create the engine if it doesn't already exist
     Matter.World.remove(engine.world, physicalObject.body);
@@ -161,10 +176,11 @@ var matter = (function() {
     makeBall: makeBall,
     makeBlock: makeBlock,
     makeBarrier: makeBarrier,
+    normalGravity: normalGravity,
+    invertedGravity: invertedGravity,
+    zeroGravity: zeroGravity,
     forget: forget,
     manualTick: manualTick
-    // zeroGravity: zeroGravity,
-    // invertGravity: invertGravity
   };
 
 }());
