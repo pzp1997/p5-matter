@@ -99,8 +99,8 @@ var matter = (function() {
 
   /* Ball */
 
-  var Ball = function(x, y, diameter) {
-    var body = Matter.Bodies.circle(x, y, diameter / 2);
+  var Ball = function(x, y, diameter, options) {
+    var body = Matter.Bodies.circle(x, y, diameter / 2, options);
     PhysicalObject.call(this, body, diameter, diameter);
   }
   Ball.prototype = Object.create(PhysicalObject.prototype);
@@ -123,12 +123,10 @@ var matter = (function() {
 
   /* Block */
 
-  var Block = function(x, y, width, height, angle) {
+  var Block = function(x, y, width, height, options) {
     var shiftedX = x + width / 2;
     var shiftedY = y + height / 2;
-    var body = Matter.Bodies.rectangle(shiftedX, shiftedY, width, height, {
-      angle: angle || 0
-    });
+    var body = Matter.Bodies.rectangle(shiftedX, shiftedY, width, height, options);
 
     PhysicalObject.call(this, body, width, height);
   }
@@ -147,27 +145,13 @@ var matter = (function() {
 
   /* Barrier */
 
-  var Barrier = function(x, y, width, height, angle) {
-    var shiftedX = x + width / 2;
-    var shiftedY = y + height / 2;
-    var body = Matter.Bodies.rectangle(shiftedX, shiftedY, width, height, {
-      isStatic: true,
-      angle: angle || 0
-    });
-
-    PhysicalObject.call(this, body, width, height);
-  }
-  Barrier.prototype = Object.create(PhysicalObject.prototype);
-  Barrier.prototype.constructor = Barrier;
-
-  Barrier.prototype.show = function() {
-    push();
-    translate(this.getX(), this.getY());
-    rotate(this.getAngle());
-    rectMode(CENTER);
-    rect(0, 0, this.getWidth(), this.getHeight());
-    pop();
+  var Barrier = function(x, y, width, height, options) {
+    options = options || {};
+    options.isStatic = true;
+    Block.call(this, x, y, width, height, options);
   };
+  Barrier.prototype = Object.create(Block.prototype);
+  Barrier.prototype.constructor = Barrier;
 
 
   /* Create the matter object for the client */
