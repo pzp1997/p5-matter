@@ -43,22 +43,23 @@ var matter = (function() {
   var invertedGravity = function() {
     engine.world.gravity.x = 0;
     engine.world.gravity.y = -1;
-  }
+  };
 
   var zeroGravity = function() {
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 0;
-  }
+  };
 
   var forget = function(physicalObject) {
     init(); // create the engine if it doesn't already exist
     Matter.World.remove(engine.world, physicalObject.body);
-  }
+  };
 
   var manualTick = function() {
     init(); // create the engine if it doesn't already exist
     Matter.Engine.update(engine);
   };
+
 
   /* PhysicalObject */
 
@@ -71,27 +72,27 @@ var matter = (function() {
     this.body = body;
     this.width = width;
     this.height = height;
-  }
+  };
 
   PhysicalObject.prototype.getX = function() {
     return this.body.position.x;
-  }
+  };
 
   PhysicalObject.prototype.getY = function() {
     return this.body.position.y;
-  }
+  };
 
   PhysicalObject.prototype.getWidth = function() {
     return this.width;
-  }
+  };
 
   PhysicalObject.prototype.getHeight = function() {
     return this.height;
-  }
+  };
 
   PhysicalObject.prototype.getAngle = function() {
     return this.body.angle;
-  }
+  };
 
   PhysicalObject.prototype.isOffCanvas = function() {
     var x = this.getX();
@@ -104,12 +105,12 @@ var matter = (function() {
     var maxHgt = height + bufferZone;
 
     return x < minWid || x > maxWid || y < minHgt || y > maxHgt;
-  }
+  };
 
   PhysicalObject.prototype.show = function() {
     throw new Error("PhysicalObject.show is an abstract method, " +
       "so you can't invoke it!");
-  }
+  };
 
 
   /* Ball */
@@ -141,7 +142,8 @@ var matter = (function() {
   var Block = function(x, y, width, height, options) {
     var shiftedX = x + width / 2;
     var shiftedY = y + height / 2;
-    var body = Matter.Bodies.rectangle(shiftedX, shiftedY, width, height, options);
+    var body = Matter.Bodies.rectangle(
+      shiftedX, shiftedY, width, height, options);
 
     PhysicalObject.call(this, body, width, height);
   };
