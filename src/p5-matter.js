@@ -9,6 +9,7 @@ var matter = (function() {
   'use strict';
 
   var engine = null;
+  var mouseConstraint = null;
 
   /**
    * Set everything up. It is recommended that you call this in the setup()
@@ -157,6 +158,33 @@ var matter = (function() {
   var manualTick = function() {
     init(true); // create the engine if it doesn't already exist
     Matter.Engine.update(engine);
+  };
+
+  /**
+   * Toggle mouse interaction. This lets you apply forces to physical objects
+   * by clicking and dragging on them. Disabled by default.
+   *
+   *
+   */
+  var mouseInteraction = function(enable) {
+    if (enable && mouseConstraint === null) {
+      var canvas = document.getElementsByTagName("canvas");
+      if (canvas && canvas.length > 0) {
+        var mouse = Matter.Mouse.create(canvas[0]);
+        mouse.pixelRatio = pixelDensity();
+
+        mouseConstraint = Matter.MouseConstraint.create(engine, {
+          mouse: mouse
+        });
+
+        init(); // create the engine if it doesn't already exist
+        Matter.World.add(engine.world, mouseConstraint);
+      }
+    } else if (!(enable || mouseConstraint === null)) {
+      init(); // create the engine if it doesn't already exist
+      Matter.World.remove(engine.world, mouseConstraint);
+      mouseConstraint = null;
+    }
   };
 
   /**
@@ -385,7 +413,8 @@ var matter = (function() {
     invertedGravity: invertedGravity,
     zeroGravity: zeroGravity,
     forget: forget,
-    manualTick: manualTick
+    manualTick: manualTick,
+    mouseInteraction: mouseInteraction
   };
 
 }());
