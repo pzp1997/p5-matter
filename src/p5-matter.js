@@ -164,7 +164,10 @@ var matter = (function() {
    * Toggle mouse interaction. This lets you apply forces to physical objects
    * by clicking and dragging on them. Disabled by default.
    *
+   * @param {boolean} enable - Enables mouse interactions if true, disables
+   * them if false.
    *
+   * @alias matter.mouseInteraction
    */
   var mouseInteraction = function(enable) {
     if (enable && mouseConstraint === null) {
