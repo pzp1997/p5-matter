@@ -106,6 +106,7 @@ var matter = (function() {
    * @alias matter.normalGravity
    */
   var normalGravity = function() {
+    init(); // create the engine if it doesn't already exist
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 1;
   };
@@ -116,6 +117,7 @@ var matter = (function() {
    * @alias matter.invertedGravity
    */
   var invertedGravity = function() {
+    init(); // create the engine if it doesn't already exist
     engine.world.gravity.x = 0;
     engine.world.gravity.y = -1;
   };
@@ -126,6 +128,7 @@ var matter = (function() {
    * @alias matter.zeroGravity
    */
   var zeroGravity = function() {
+    init(); // create the engine if it doesn't already exist
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 0;
   };
@@ -152,7 +155,7 @@ var matter = (function() {
    * @alias matter.manualTick
    */
   var manualTick = function() {
-    init(); // create the engine if it doesn't already exist
+    init(true); // create the engine if it doesn't already exist
     Matter.Engine.update(engine);
   };
 
