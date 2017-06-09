@@ -12,7 +12,7 @@ var matter = (function() {
 
   /**
    * Set everything up. It is recommended that you call this in the setup()
-   * function of your p5.js script. It is not a big deal if you forget to do
+   * function of your p5.js sketch. It is not a big deal if you forget to do
    * this though, as we will call it for you when you use any other method.
    *
    * @param {boolean} [manual=false] - Stop matter.js from automatically
@@ -289,9 +289,6 @@ var matter = (function() {
   Ball.prototype = Object.create(PhysicalObject.prototype);
   Ball.prototype.constructor = Ball;
 
-  /**
-   * @see PhysicalObject.show
-   */
   Ball.prototype.show = function() {
     push();
     translate(this.getX(), this.getY());
@@ -301,7 +298,7 @@ var matter = (function() {
   };
 
   /**
-   * Get the diameter of the ball. Alias for {@link PhysicalObject.getWidth}.
+   * Get the diameter of the ball. Alias for PhysicalObject#getWidth.
    *
    * @returns {number}
    * @function
@@ -345,9 +342,6 @@ var matter = (function() {
   Block.prototype = Object.create(PhysicalObject.prototype);
   Block.prototype.constructor = Block;
 
-  /**
-   * @see PhysicalObject.show
-   */
   Block.prototype.show = function() {
     push();
     translate(this.getX(), this.getY());
