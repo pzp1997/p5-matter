@@ -1,8 +1,27 @@
+/**
+ * The global object for interacting with matter.js. Has a handful of methods
+ * for creating physics-aware objects and manipulating the environment.
+ *
+ * @namespace
+ * @author Palmer Paul
+ */
 var matter = (function() {
   'use strict';
 
   var engine = null;
 
+  /**
+   * Set everything up. It is recommended that you call this in the setup()
+   * function of your p5.js script. It is not a big deal if you forget to do
+   * this though, as we will call it for you when you use any other method.
+   *
+   * @param {boolean} [manual=false] - Stop matter.js from automatically
+   * updating. If you choose to do this, use {@link matter.manualTick} in
+   * your draw() function. In general, this is a bad idea, but it is here in
+   * case you need more control.
+   *
+   * @alias matter.init
+   */
   var init = function(manual) {
     if (engine === null) {
       engine = Matter.Engine.create();
@@ -12,57 +31,148 @@ var matter = (function() {
     }
   };
 
+  /**
+   * Add a physical object to the world. Helper for the make*() functions.
+   *
+   * @param {PhysicalObject} physicalObject
+   *
+   * @private
+   */
   var addToWorld = function(physicalObject) {
     init(); // create the engine if it doesn't already exist
     Matter.World.add(engine.world, physicalObject.body);
   };
 
-  var makeBall = function(x, y, radius) {
-    var ball = new Ball(x, y, radius);
+  /**
+   * Make a ball with the given parameters.
+   *
+   * @param {number} x - The initial x-coordinate measured from the center.
+   * @param {number} y - The initial y-coordinate measured from the center.
+   * @param {number} diameter - The diameter of the ball.
+   * @param {Object} [options] - An object of any Matter.Body properties
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @returns {Ball}
+   *
+   * @alias matter.makeBall
+   */
+  var makeBall = function(x, y, diameter, options) {
+    var ball = new Ball(x, y, diameter, options);
     addToWorld(ball);
     return ball;
   };
 
-  var makeBlock = function(x, y, width, height, angle) {
-    var block = new Block(x, y, width, height, angle);
+  /**
+   * Make a block with the given parameters.
+   *
+   * @param {number} x - The initial x-coordinate measured from the top-left.
+   * @param {number} y - The initial y-coordinate measured from the top-left.
+   * @param {number} width - The width of the block.
+   * @param {number} height - The height of the block.
+   * @param {Object} [options] - An object of any Matter.Body properties
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @returns {Block}
+   *
+   * @alias matter.makeBlock
+   */
+  var makeBlock = function(x, y, width, height, options) {
+    var block = new Block(x, y, width, height, options);
     addToWorld(block);
     return block;
   };
 
-  var makeBarrier = function(x, y, width, height, angle) {
-    var barrier = new Barrier(x, y, width, height, angle);
+  /**
+   * Make a barrier with the given parameters.
+   *
+   * @param {number} x - The initial x-coordinate measured from the top-left.
+   * @param {number} y - The initial y-coordinate measured from the top-left.
+   * @param {number} width - The width of the barrier.
+   * @param {number} height - The height of the barrier.
+   * @param {Object} [options] - An object of any Matter.Body properties
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * Note that the isStatic property will be overriden to true.
+   * @returns {Barrier}
+   *
+   * @alias matter.makeBarrier
+   */
+  var makeBarrier = function(x, y, width, height, options) {
+    var barrier = new Barrier(x, y, width, height, options);
     addToWorld(barrier);
     return barrier;
   };
 
+  /**
+   * Change the gravity to be the default.
+   *
+   * @alias matter.normalGravity
+   */
   var normalGravity = function() {
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 1;
   };
 
+  /**
+   * Change the gravity to be upside-down.
+   *
+   * @alias matter.invertedGravity
+   */
   var invertedGravity = function() {
     engine.world.gravity.x = 0;
     engine.world.gravity.y = -1;
   };
 
+  /**
+   * Change the gravity to be zero, i.e. disable gravity.
+   *
+   * @alias matter.zeroGravity
+   */
   var zeroGravity = function() {
     engine.world.gravity.x = 0;
     engine.world.gravity.y = 0;
   };
 
+  /**
+   * Stop tracking a particular object. Even if an object goes out of view,
+   * calculations will continue to be performed for that object unless you
+   * call this method. It is important to use this method when you are done
+   * with an object in order for things to run smoothly.
+   *
+   * @param {PhysicalObject} physicalObject
+   *
+   * @alias matter.forget
+   */
   var forget = function(physicalObject) {
     init(); // create the engine if it doesn't already exist
     Matter.World.remove(engine.world, physicalObject.body);
   };
 
+  /**
+   * Manually trigger an update of the physics engine. You only should be
+   * using this if you initially passed a value of true to {@link matter.init}.
+   *
+   * @alias matter.manualTick
+   */
   var manualTick = function() {
     init(); // create the engine if it doesn't already exist
     Matter.Engine.update(engine);
   };
 
-
-  /* PhysicalObject */
-
+  /**
+   * Represents any object that obeys physics. Serves as the parent class for
+   * Ball, Block, and Barrier. It basically wraps a matter.js body and provides
+   * some getters and convenience methods.
+   *
+   * PhysicalObject is an abstract class, meaning that it is impossible to
+   * create instances of it. You do not need to worry about this though.
+   *
+   * @param {Matter.Body} body
+   * @param {number} width
+   * @param {number} height
+   *
+   * @public
+   * @abstract
+   * @class
+   * @author Palmer Paul
+   */
   var PhysicalObject = function(body, width, height) {
     if (this.constructor === PhysicalObject) {
       throw new Error("PhysicalObject is an abstract class, " +
@@ -74,47 +184,101 @@ var matter = (function() {
     this.height = height;
   };
 
+  /**
+   * Get the current x-coordinate of the object.
+   *
+   * @returns {number}
+   */
   PhysicalObject.prototype.getX = function() {
     return this.body.position.x;
   };
 
+  /**
+   * Get the current y-coordinate of the object.
+   *
+   * @returns {number}
+   */
   PhysicalObject.prototype.getY = function() {
     return this.body.position.y;
   };
 
+  /**
+   * Get the width of the object.
+   *
+   * @returns {number}
+   */
   PhysicalObject.prototype.getWidth = function() {
     return this.width;
   };
 
+  /**
+   * Get the height of the object.
+   *
+   * @returns {number}
+   */
   PhysicalObject.prototype.getHeight = function() {
     return this.height;
   };
 
+  /**
+   * Get the current angle of the object in radians.
+   *
+   * @returns {number}
+   */
   PhysicalObject.prototype.getAngle = function() {
     return this.body.angle;
   };
 
-  PhysicalObject.prototype.isOffCanvas = function() {
+  /**
+   * Determine if the object is off the canvas.
+   *
+   * @param {number} [bufferZone=0] - Extra room to leave around the edges.
+   * @returns {boolean}
+   */
+  PhysicalObject.prototype.isOffCanvas = function(bufferZone) {
+    bufferZone = bufferZone || 0;
+
     var x = this.getX();
     var y = this.getY();
+    var wid = this.getWidth();
+    var hgt = this.getHeight();
 
-    var bufferZone = 100;
-    var minWid = -bufferZone;
-    var minHgt = -bufferZone;
-    var maxWid = width + bufferZone;
-    var maxHgt = height + bufferZone;
+    var minX = -(wid + bufferZone);
+    var minY = -(hgt + bufferZone);
+    var maxX = width + wid + bufferZone;
+    var maxY = height + hgt + bufferZone;
 
-    return x < minWid || x > maxWid || y < minHgt || y > maxHgt;
+    return x < minX || x > maxX || y < minY || y > maxY;
   };
 
+  /**
+   * Draw the object to the screen. Respects the current style settings. Using
+   * this is optional, feel free to draw the objects however you would like.
+   *
+   * @abstract
+   */
   PhysicalObject.prototype.show = function() {
     throw new Error("PhysicalObject.show is an abstract method, " +
       "so you can't invoke it!");
   };
 
 
-  /* Ball */
-
+  /**
+   * Represents a circle that obeys physics.
+   *
+   * The constructor for Ball is private. Use {@link matter.makeBall} instead.
+   *
+   * @param {number} x - The initial x-coordinate measured from the center.
+   * @param {number} y - The initial y-coordinate measured from the center.
+   * @param {number} diameter - The diameter of the ball.
+   * @param {Object} [options] - An object of any Matter.Body properties
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   *
+   * @public
+   * @class
+   * @augments PhysicalObject
+   * @author Palmer Paul
+   */
   var Ball = function(x, y, diameter, options) {
     var body = Matter.Bodies.circle(x, y, diameter / 2, options);
     PhysicalObject.call(this, body, diameter, diameter);
@@ -122,6 +286,9 @@ var matter = (function() {
   Ball.prototype = Object.create(PhysicalObject.prototype);
   Ball.prototype.constructor = Ball;
 
+  /**
+   * @see PhysicalObject.show
+   */
   Ball.prototype.show = function() {
     push();
     translate(this.getX(), this.getY());
@@ -130,15 +297,40 @@ var matter = (function() {
     pop();
   };
 
+  /**
+   * Get the diameter of the ball. Alias for {@link PhysicalObject.getWidth}.
+   *
+   * @returns {number}
+   * @function
+   */
   Ball.prototype.getDiameter = Ball.prototype.getWidth;
 
+  /**
+   * Get the radius of the ball.
+   *
+   * @returns {number}
+   */
   Ball.prototype.getRadius = function() {
     return this.getDiameter() / 2;
   };
 
-
-  /* Block */
-
+  /**
+   * Represents a rectangle that obeys physics.
+   *
+   * The constructor for Block is private. Use {@link matter.makeBlock}
+   * instead.
+   *
+   * @param {number} x - The initial x-coordinate measured from the top-left.
+   * @param {number} y - The initial y-coordinate measured from the top-left.
+   * @param {number} width - The width of the block.
+   * @param {number} height - The height of the block.
+   * @param {Object} [options] - An object of any Matter.Body properties
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   *
+   * @class
+   * @augments PhysicalObject
+   * @author Palmer Paul
+   */
   var Block = function(x, y, width, height, options) {
     var shiftedX = x + width / 2;
     var shiftedY = y + height / 2;
@@ -150,6 +342,9 @@ var matter = (function() {
   Block.prototype = Object.create(PhysicalObject.prototype);
   Block.prototype.constructor = Block;
 
+  /**
+   * @see PhysicalObject.show
+   */
   Block.prototype.show = function() {
     push();
     translate(this.getX(), this.getY());
@@ -159,9 +354,23 @@ var matter = (function() {
     pop();
   };
 
-
-  /* Barrier */
-
+  /**
+   * Represents an immovable Block. Good for making floor, walls, bumpers, etc.
+   *
+   * The constructor for Barrier is private. Use {@link matter.makeBarrier}
+   * instead.
+   *
+   * @param {number} x - The initial x-coordinate measured from the top-left.
+   * @param {number} y - The initial y-coordinate measured from the top-left.
+   * @param {number} width - The width of the block.
+   * @param {number} height - The height of the block.
+   * @param {Object} [options] - An object of any Matter.Body properties
+     * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   *
+   * @class
+   * @augments Block
+   * @author Palmer Paul
+   */
   var Barrier = function(x, y, width, height, options) {
     options = options || {};
     options.isStatic = true;
@@ -169,9 +378,6 @@ var matter = (function() {
   };
   Barrier.prototype = Object.create(Block.prototype);
   Barrier.prototype.constructor = Barrier;
-
-
-  /* Create the matter object for the client */
 
   return {
     init: init,
