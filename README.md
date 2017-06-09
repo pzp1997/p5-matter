@@ -37,4 +37,5 @@ Throw Block - Throw a block around the screen. [See it live](http://palmerpaul.c
 ## Credit
 
 Palmer Paul (programmer, maintainer)
+
 Stephen Lewis (concept)
