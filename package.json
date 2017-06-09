@@ -2,6 +2,9 @@
   "name": "p5-matter",
   "version": "1.0.0",
   "description": "Seamlessly integrate matter.js with p5.js",
+  "scripts": {
+    "build-docs": "documentation build src/p5-matter.js -f html -o docs/"
+  },
   "main": "src/p5-matter.js",
   "author": "Palmer Paul <pzpaul2002@yahoo.com>",
   "license": "MIT",
