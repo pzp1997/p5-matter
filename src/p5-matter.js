@@ -102,36 +102,49 @@ var matter = (function() {
   };
 
   /**
-   * Change the gravity to be the default.
+   * Change the gravity to be the default. Alias for
+   * <code>matter.changeGravity(0, 1)</code>.
    *
    * @alias matter.normalGravity
    */
   var normalGravity = function() {
-    init(); // create the engine if it doesn't already exist
-    engine.world.gravity.x = 0;
-    engine.world.gravity.y = 1;
+    changeGravity(0, 1);
   };
 
   /**
-   * Change the gravity to be upside-down.
+   * Change the gravity to be upside-down. Alias for
+   * <code>matter.changeGravity(0, -1)</code>.
    *
    * @alias matter.invertedGravity
    */
   var invertedGravity = function() {
-    init(); // create the engine if it doesn't already exist
-    engine.world.gravity.x = 0;
-    engine.world.gravity.y = -1;
+    changeGravity(0, -1);
   };
 
   /**
-   * Change the gravity to be zero, i.e. disable gravity.
+   * Change the gravity to be zero, i.e. disable gravity. Alias for
+   * <code>matter.changeGravity(0, 0)</code>.
    *
    * @alias matter.zeroGravity
    */
   var zeroGravity = function() {
+    changeGravity(0, 0);
+  };
+
+  /**
+   * Change the strength and direction of gravity.
+   *
+   * @param {number} x - The gravitational acceleration along the x-axis. A
+   * sensible value is somewhere in the range of [-1.. 1].
+   * @param {number} y - The gravitational acceleration along the y-axis. A
+   * sensible value is somewhere in the range of [-1.. 1].
+   *
+   * @alias matter.changeGravity
+   */
+  var changeGravity = function(x, y) {
     init(); // create the engine if it doesn't already exist
-    engine.world.gravity.x = 0;
-    engine.world.gravity.y = 0;
+    engine.world.gravity.x = x;
+    engine.world.gravity.y = y;
   };
 
   /**
@@ -415,6 +428,7 @@ var matter = (function() {
     normalGravity: normalGravity,
     invertedGravity: invertedGravity,
     zeroGravity: zeroGravity,
+    changeGravity: changeGravity,
     forget: forget,
     manualTick: manualTick,
     mouseInteraction: mouseInteraction
