@@ -3,6 +3,8 @@
  * for creating physics-aware objects and manipulating the environment.
  *
  * @namespace
+ * @requires p5.js
+ * @requires matter.js
  * @author Palmer Paul
  */
 var matter = (function() {
@@ -41,7 +43,7 @@ var matter = (function() {
    */
   var addToWorld = function(physicalObject) {
     init(); // create the engine if it doesn't already exist
-    Matter.World.add(engine.world, physicalObject.body);
+    Matter.World.addBody(engine.world, physicalObject.body);
   };
 
   /**
@@ -194,7 +196,7 @@ var matter = (function() {
         });
 
         init(); // create the engine if it doesn't already exist
-        Matter.World.add(engine.world, mouseConstraint);
+        Matter.World.addConstraint(engine.world, mouseConstraint);
       }
     } else if (!(enable || mouseConstraint === null)) {
       init(); // create the engine if it doesn't already exist
@@ -406,7 +408,7 @@ var matter = (function() {
    * @param {number} width - The width of the block.
    * @param {number} height - The height of the block.
    * @param {Object} [options] - An object of any Matter.Body properties
-     * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
    *
    * @class
    * @augments Block
