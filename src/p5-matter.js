@@ -339,6 +339,7 @@ var matter = (function() {
     push();
     translate(this.getX(), this.getY());
     rotate(this.getAngle());
+    ellipseMode(CENTER);
     ellipse(0, 0, this.getWidth(), this.getHeight());
     pop();
   };
@@ -366,8 +367,8 @@ var matter = (function() {
    * The constructor for Block is private. Use {@link matter.makeBlock}
    * instead.
    *
-   * @param {number} x - The initial x-coordinate measured from the top-left.
-   * @param {number} y - The initial y-coordinate measured from the top-left.
+   * @param {number} x - The initial x-coordinate measured from the center.
+   * @param {number} y - The initial y-coordinate measured from the center.
    * @param {number} width - The width of the block.
    * @param {number} height - The height of the block.
    * @param {Object} [options] - An object of any Matter.Body properties
@@ -378,11 +379,7 @@ var matter = (function() {
    * @author Palmer Paul
    */
   var Block = function(x, y, width, height, options) {
-    var shiftedX = x + width / 2;
-    var shiftedY = y + height / 2;
-    var body = Matter.Bodies.rectangle(
-      shiftedX, shiftedY, width, height, options);
-
+    var body = Matter.Bodies.rectangle(x, y, width, height, options);
     PhysicalObject.call(this, body, width, height);
   };
   Block.prototype = Object.create(PhysicalObject.prototype);
