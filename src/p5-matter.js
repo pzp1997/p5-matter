@@ -106,6 +106,25 @@ var matter = (function() {
   };
 
   /**
+   * Make physics-aware text. Its trick is putting a bounding rectangle Block
+   * around the text. The width and the height of the rectangle are determed
+   * dynamically at creation time by inspecting the <code>textSize</code>.
+   *
+   * @param {string} text
+   * @param {number} x - The initial x-coordinate measured from the center.
+   * @param {number} y - The initial y-coordinate measured from the center.
+   * @param {Object} [options] - An object of any Matter.Body properties
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   *
+   * @alias matter.makeSign
+   */
+  var makeSign = function(text, x, y, options) {
+    var sign = new Sign(text, x, y, options);
+    addToWorld(sign);
+    return sign;
+  };
+
+  /**
    * Change the gravity to be the default. Alias for
    * <code>matter.changeGravity(0, 1)</code>.
    *
@@ -419,12 +438,52 @@ var matter = (function() {
     pop();
   };
 
+  /**
+   * Represents physics-aware text.
+   *
+   * The constructor for Sign is private. Use {@link matter.makeSign} instead.
+   *
+   * @param {string} text
+   * @param {number} x - The initial x-coordinate measured from the center.
+   * @param {number} y - The initial y-coordinate measured from the center.
+   * @param {Object} [options] - An object of any Matter.Body properties
+   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   *
+   * @class
+   * @augments Block
+   * @author Palmer Paul
+   */
+  var Sign = function(text, x, y, options) {
+    this.text = text;
+    Block.call(this, x, y, textWidth(text), textSize(), options);
+  };
+  Sign.prototype = Object.create(Block.prototype);
+  Sign.prototype.constructor = Sign;
+
+  /**
+   * Get the text of the sign.
+   *
+   * @returns {string}
+   */
+  Sign.prototype.getText = function() {
+    return this.text;
+  };
+
+  Sign.prototype.show = function() {
+    push();
+    translate(this.getX(), this.getY() + this.getHeight() * 0.25);
+    rotate(this.getAngle());
+    textAlign(CENTER);
+    text(this.getText(), 0, 0);
+    pop();
+  };
 
   return {
     init: init,
     makeBall: makeBall,
     makeBlock: makeBlock,
     makeBarrier: makeBarrier,
+    makeSign: makeSign,
     normalGravity: normalGravity,
     invertedGravity: invertedGravity,
     zeroGravity: zeroGravity,
