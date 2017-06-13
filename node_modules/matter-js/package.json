@@ -1,0 +1,66 @@
+{
+  "name": "matter-js",
+  "version": "0.12.0",
+  "license": "MIT",
+  "homepage": "http://brm.io/matter-js/",
+  "author": "Liam Brummitt <liam@brm.io> (http://brm.io/)",
+  "description": "a 2D rigid body physics engine for the web",
+  "main": "build/matter.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liabru/matter-js.git"
+  },
+  "keywords": [
+    "javascript",
+    "canvas",
+    "html5",
+    "physics",
+    "physics engine",
+    "game engine",
+    "rigid body physics"
+  ],
+  "devDependencies": {
+    "browserify": "^14.0.0",
+    "browserify-shim": "^3.8.13",
+    "cheerio": "^0.22.0",
+    "connect-livereload": "^0.6.0",
+    "event-stream": "^3.3.2",
+    "fast-json-patch": "^1.1.4",
+    "gulp": "^3.9.0",
+    "gulp-bump": "^2.6.1",
+    "gulp-clone": "^1.0.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-conventional-changelog": "^1.1.0",
+    "gulp-derequire": "^2.1.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-github-release": "^1.2.1",
+    "gulp-header": "^1.7.1",
+    "gulp-preprocess": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-tag-version": "^1.3.0",
+    "gulp-uglify": "^2.0.1",
+    "gulp-util": "^3.0.8",
+    "gulp-webdriver": "^2.0.3",
+    "gulp-webserver": "^0.9.1",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.4.2",
+    "run-sequence": "^1.1.4",
+    "through2": "^2.0.3",
+    "vinyl-transform": "^1.0.0",
+    "watchify": "^3.9.0",
+    "yuidocjs": "^0.10.2"
+  },
+  "scripts": {
+    "test": "gulp build:dev && gulp lint"
+  },
+  "dependencies": {},
+  "files": [
+    "src",
+    "build",
+    "CHANGELOG.md"
+  ],
+  "browserify-shim": {
+    "poly-decomp": "global:decomp"
+  }
+}
