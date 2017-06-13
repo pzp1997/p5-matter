@@ -84,7 +84,8 @@ var matter = (function() {
   };
 
   /**
-   * Make a barrier with the given parameters.
+   * Make a barrier with the given parameters. Barriers are essentially
+   * frozen / immovable blocks. Good for making floor, walls, bumpers, etc.
    *
    * @param {number} x - The initial x-coordinate measured from the top-left.
    * @param {number} y - The initial y-coordinate measured from the top-left.
@@ -98,7 +99,8 @@ var matter = (function() {
    * @alias matter.makeBarrier
    */
   var makeBarrier = function(x, y, width, height, options) {
-    var barrier = new Barrier(x, y, width, height, options);
+    var barrier = new Block(x, y, width, height, options);
+    barrier.freeze();
     addToWorld(barrier);
     return barrier;
   };
@@ -279,6 +281,29 @@ var matter = (function() {
   };
 
   /**
+   * Check if the object is frozen, i.e. static.
+   *
+   * @return {boolean}
+   */
+  PhysicalObject.prototype.isFrozen = function () {
+    return this.body.isStatic;
+  };
+
+  /**
+   * Freeze the object in place, causing it to stop moving.
+   */
+  PhysicalObject.prototype.freeze = function() {
+    Matter.Body.setStatic(this.body, true);
+  };
+
+  /**
+   * Unfreeze the object, causing it to start moving again.
+   */
+  PhysicalObject.prototype.unfreeze = function() {
+    Matter.Body.setStatic(this.body, false);
+  };
+
+  /**
    * Determine if the object is off the canvas.
    *
    * @param {number} [bufferZone=0] - Extra room to leave around the edges.
@@ -394,30 +419,6 @@ var matter = (function() {
     pop();
   };
 
-  /**
-   * Represents an immovable Block. Good for making floor, walls, bumpers, etc.
-   *
-   * The constructor for Barrier is private. Use {@link matter.makeBarrier}
-   * instead.
-   *
-   * @param {number} x - The initial x-coordinate measured from the top-left.
-   * @param {number} y - The initial y-coordinate measured from the top-left.
-   * @param {number} width - The width of the block.
-   * @param {number} height - The height of the block.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
-   *
-   * @class
-   * @augments Block
-   * @author Palmer Paul
-   */
-  var Barrier = function(x, y, width, height, options) {
-    options = options || {};
-    options.isStatic = true;
-    Block.call(this, x, y, width, height, options);
-  };
-  Barrier.prototype = Object.create(Block.prototype);
-  Barrier.prototype.constructor = Barrier;
 
   return {
     init: init,
