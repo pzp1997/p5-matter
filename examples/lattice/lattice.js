@@ -60,24 +60,18 @@ function draw() {
 
   stroke(0, 255, 0);
   for (var i = 0; i < latticeConnections.length; i++) {
-    if (latticeConnections[i].isActive()) {
-      latticeConnections[i].show();
-    }
+    latticeConnections[i].show();
   }
 
   stroke(255, 0, 0);
   for (var j = 0; j < latticeDiagonals.length; j++) {
-    if (latticeDiagonals[j].isActive()) {
-      latticeDiagonals[j].show();
-    }
+    latticeDiagonals[j].show();
   }
 
   noStroke();
   fill(255);
   for (var k = 0; k < latticeBalls.length; k++) {
-    if (latticeBalls[k].isActive()) {
-      latticeBalls[k].show();
-    }
+    latticeBalls[k].show();
   }
 
   fill(0);
