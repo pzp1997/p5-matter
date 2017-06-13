@@ -1,9 +1,0 @@
-.editorconfig
-.eslintignore
-.eslintrc
-.gitattributes
-.gitignore
-.nyc_output
-circle.yml
-coverage
-test
