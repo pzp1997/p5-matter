@@ -11,7 +11,7 @@ var matter = (function() {
   'use strict';
 
   var engine = null;
-  var mouseConstraint = null;
+  var mouseEnabled = [];
 
   /**
    * Set everything up. It is recommended that you call this in the setup()
@@ -262,32 +262,38 @@ var matter = (function() {
   };
 
   /**
-   * Toggle mouse interaction. This lets you apply forces to physical objects
-   * by clicking and dragging on them. Disabled by default.
+   * Enable mouse interaction for the given canvas. This lets you apply forces
+   * to physical objects by clicking and dragging on them.
    *
-   * @param {boolean} enable - Enables mouse interactions if true, disables
-   * them if false.
+   * @param {Object} [canvas] - The canvas for which to enable mouse
+   * interaction. You can get the canvas object for your sketch by storing the
+   * return value of <code>createCanvas</code>. If not supplied, defaults to
+   * <code>window.canvas</code>.
    *
    * @alias matter.mouseInteraction
    */
-  var mouseInteraction = function(enable) {
-    if (enable && mouseConstraint === null) {
-      var canvas = document.getElementsByTagName("canvas");
-      if (canvas && canvas.length > 0) {
-        var mouse = Matter.Mouse.create(canvas[0]);
-        mouse.pixelRatio = pixelDensity();
+  var mouseInteraction = function(canvas) {
+    var canvasElt;
 
-        mouseConstraint = Matter.MouseConstraint.create(engine, {
-          mouse: mouse
-        });
+    if (canvas && canvas.elt) {
+      canvasElt = canvas.elt;
+    } else if (window && window.canvas) {
+      canvasElt = window.canvas;
+    } else {
+      canvasElt = null;
+    }
 
-        init(); // create the engine if it doesn't already exist
-        Matter.World.addConstraint(engine.world, mouseConstraint);
-      }
-    } else if (!(enable || mouseConstraint === null)) {
+    if (canvasElt && !mouseEnabled.includes(canvasElt)) {
+      var mouse = Matter.Mouse.create(canvasElt);
+      mouse.pixelRatio = pixelDensity();
+
       init(); // create the engine if it doesn't already exist
-      Matter.World.remove(engine.world, mouseConstraint);
-      mouseConstraint = null;
+      Matter.World.add(engine.world,
+        Matter.MouseConstraint.create(engine, {
+          mouse: mouse
+        }));
+
+      mouseEnabled.push(canvasElt);
     }
   };
 
