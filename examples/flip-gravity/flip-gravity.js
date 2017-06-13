@@ -12,8 +12,10 @@ function setup() {
   /* I want to make the barriers at the edges of the canvas, so it looks like
    the objects are bouncing off the frame of the window. It is okay that the
    barriers are off the canvas, note below that I do not even .show() them! */
-  floor = matter.makeBarrier(0, height, width, 50);
-  ceiling = matter.makeBarrier(0, -50, width, 50);
+  floor = matter.makeBarrier(width / 2, -50, width, 100);
+  ceiling = matter.makeBarrier(width / 2, height + 50, width, 100);
+  leftWall = matter.makeBarrier(-50, height / 2, 100, height);
+  rightWall = matter.makeBarrier(width + 50, height / 2, 100, height);
 
   for (var i = 0; i < 10; i++) {
     var randomBall = matter.makeBall(
@@ -27,7 +29,7 @@ function setup() {
     objects.push(randomBall);
   }
 
-  for (var i = 0; i < 10; i++) {
+  for (var j = 0; j < 10; j++) {
     var randomBlock = matter.makeBlock(
       random(0, width), random(0, height), random(20, 80), random(20, 80));
     randomBlock.color = color(random(0, 255), random(0, 255), random(0, 255));

@@ -6,7 +6,7 @@ function setup() {
   noStroke();
 
   matter.init();
-  platform = matter.makeBarrier(0, height - 50, width, 50);
+  platform = matter.makeBarrier(width / 2, height, width, 100);
 }
 
 function mousePressed() {

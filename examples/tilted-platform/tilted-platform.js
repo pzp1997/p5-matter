@@ -7,11 +7,13 @@ function setup() {
   noStroke();
 
   matter.init();
-  topPlatform = matter.makeBarrier(50, 100, 300, 30, {
+
+  topPlatform = matter.makeBarrier(200, 100, 300, 30, {
     angle: radians(20),
     friction: 0
   });
-  bottomPlatform = matter.makeBarrier(250, 400, 300, 30, {
+
+  bottomPlatform = matter.makeBarrier(400, 400, 300, 30, {
     angle: radians(-30),
     friction: 0
   });
