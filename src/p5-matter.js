@@ -22,7 +22,7 @@
  * <code>textAlign(CENTER)</code>. Although not technically necessary, it might
  * be helpful to set those modes anyway as a reminder.
  *
- * For those of you coming from matter.js, here are some of the parallels
+ * For those of you coming from matter.js, here are some of the analogues
  * between the two libraries. <code>{@link matter.init}</code> calls
  * <code>Matter.Engine.create</code> and, depending on the passed argument,
  * <code>Matter.Engine.run</code>. <code>{@link matter.makeBall}</code> and

@@ -6,9 +6,10 @@ var BALLS_PER_SIDE = 5;
 var GAP_SIZE = 80;
 
 function setup() {
-  createCanvas(600, 600);
+  var canvas = createCanvas(600, 600);
 
   matter.init();
+  matter.mouseInteraction(canvas);
 
   floor = matter.makeBarrier(width / 2, height, width, 50, {
     restitution: 1
@@ -52,10 +53,6 @@ function setup() {
       }
     }
   }
-}
-
-function mousePressed() {
-  matter.forget(random(latticeBalls));
 }
 
 function draw() {

@@ -1,6 +1,7 @@
-var sign;
-var floor;
+var signs = [];
 var balls = [];
+var floor;
+
 
 function setup() {
   createCanvas(600, 600);
@@ -9,31 +10,58 @@ function setup() {
   matter.init();
   matter.changeGravity(0, 0.25);
 
-  sign = matter.makeSign("physics", width / 2, height / 2);
-  sign.freeze();
+  signs.push(matter.makeSign("physics", width / 2 - 120, height / 2, {
+    restitution: 1
+  }));
+  signs.push(matter.makeSign("is", width / 2 + 20, height / 2, {
+    restitution: 1
+  }));
+  signs.push(matter.makeSign("cool!", width / 2 + 120, height / 2, {
+    restitution: 1
+  }));
+
+  for (var j = 0; j < signs.length; j++) {
+    signs[j].freeze();
+  }
 
   floor = matter.makeBarrier(width / 2, height, width, 30, {
     restitution: 1
   });
 
-  for (var i = 0; i < 30; i++) {
-    var ball = matter.makeBall(random(0.15 * width, 0.85 * width),
-      random(0, height * 0.75), random(30, 60), {
+  for (var i = 0; i < 20; i++) {
+    var ballAbove = matter.makeBall(random(0.15 * width, 0.85 * width),
+      random(0, height * 0.4), random(30, 60), {
         restitution: 1
       });
-    balls.push(ball);
+    balls.push(ballAbove);
+  }
+  for (i = 0; i < 10; i++) {
+    ballBelow = matter.makeBall(random(0.15 * width, 0.85 * width),
+      random(height * 0.6, height * 0.8), random(30, 60), {
+        restitution: 1
+      });
+    balls.push(ballBelow);
   }
 }
 
 function mousePressed() {
-  sign.unfreeze();
+  for (i = 0; i < signs.length; i++) {
+    var sign = signs[i];
+    if (2 * abs(mouseX - sign.getX()) <= sign.getWidth() &&
+      2 * abs(mouseY - sign.getY()) <= sign.getHeight()) {
+      sign.unfreeze();
+    }
+  }
 }
 
 function draw() {
   background(255);
 
   fill(255, 0, 0);
-  sign.show();
+
+  for (j = 0; j < signs.length; j++) {
+    signs[j].show();
+  }
 
   fill(0);
 
