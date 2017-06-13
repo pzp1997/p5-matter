@@ -1,0 +1,81 @@
+{
+  "name": "vfile-reporter",
+  "version": "3.0.0",
+  "description": "Stylish reporter for virtual files",
+  "license": "MIT",
+  "keywords": [
+    "vfile",
+    "formatter",
+    "reporter",
+    "lint",
+    "format",
+    "message",
+    "warning",
+    "error"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "repository": "https://github.com/wooorm/vfile-reporter",
+  "bugs": "https://github.com/wooorm/vfile-reporter/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.0",
+    "log-symbols": "^1.0.2",
+    "plur": "^2.0.0",
+    "repeat-string": "^1.5.0",
+    "string-width": "^1.0.0",
+    "strip-ansi": "^3.0.1",
+    "trim": "0.0.1",
+    "unist-util-stringify-position": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "esmangle": "^1.0.1",
+    "istanbul": "^0.4.0",
+    "remark-cli": "^1.0.0",
+    "remark-comment-config": "^4.0.0",
+    "remark-github": "^5.0.0",
+    "remark-lint": "^4.0.0",
+    "remark-usage": "^4.0.0",
+    "remark-validate-links": "^4.0.0",
+    "tape": "^4.0.0",
+    "vfile": "^2.0.0",
+    "xo": "^0.16.0"
+  },
+  "scripts": {
+    "build-md": "remark . --quiet --frail",
+    "build-bundle": "browserify index.js --bare -s vfileReporter > vfile-reporter.js",
+    "build-mangle": "esmangle vfile-reporter.js > vfile-reporter.min.js",
+    "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
+    "lint": "xo",
+    "test-api": "node test.js",
+    "test-coverage": "istanbul cover test.js",
+    "test": "npm run build && npm run lint && npm run test-coverage"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "max-lines": "off"
+    },
+    "ignores": [
+      "vfile-reporter.js"
+    ]
+  },
+  "remarkConfig": {
+    "output": true,
+    "plugins": [
+      "comment-config",
+      "lint",
+      "github",
+      "validate-links",
+      "usage"
+    ],
+    "settings": {
+      "bullet": "*"
+    }
+  }
+}

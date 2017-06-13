@@ -1,0 +1,17 @@
+'use strict';
+
+var normalize = require('normalize-uri');
+var all = require('../all');
+
+module.exports = link;
+
+/* Transform a link. */
+function link(h, node) {
+  var props = {href: normalize(node.url)};
+
+  if (node.title != null) {
+    props.title = node.title;
+  }
+
+  return h(node, 'a', props, all(h, node));
+}
