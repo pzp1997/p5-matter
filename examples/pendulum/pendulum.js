@@ -7,6 +7,7 @@ function setup() {
   fill(0);
 
   matter.init();
+  matter.mouseInteraction(canvas);
 
   ceiling = matter.makeBarrier(width / 2, -100, width + 400, 240);
 
