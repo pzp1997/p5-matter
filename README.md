@@ -13,7 +13,7 @@ Everything you can do as a user of p5-matter exists in the global `matter` objec
 
 ## Examples
 
-#### Highlights
+### Highlights
 
 **Draw Barriers** - Click and drag to draw a barrier to stop falling balls. [See it live!](http://palmerpaul.com/p5-matter/examples/draw-barrier)
 
@@ -23,7 +23,7 @@ Everything you can do as a user of p5-matter exists in the global `matter` objec
 
 **Physics Sign** - Physics-aware text! Balls will bounce off the text. Click the mouse to make the sign fall. [See it live!](http://palmerpaul.com/p5-matter/examples/physics-sign)
 
-#### All Examples
+### All Examples
 
 **Freeze Click** - Click on the falling balls to freeze them in place (click again to unfreeze the ball). [See it live!](http://palmerpaul.com/p5-matter/examples/freeze-click)
 
