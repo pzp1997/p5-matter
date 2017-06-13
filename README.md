@@ -15,31 +15,43 @@ Everything you can do as a user of p5-matter exists in the global `matter` objec
 
 ### Highlights
 
-**Draw Barriers** - Click and drag to draw a barrier to stop falling balls. [See it live!](http://palmerpaul.com/p5-matter/examples/draw-barrier)
+**Draw Barriers** - Click and drag to draw a barrier to stop falling balls.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/draw-barriers) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/draw-barriers/draw-barriers.js)
 
-**Lattice** - Drag around a lattice of interconnected balls. [See it live!](http://palmerpaul.com/p5-matter/examples/lattice)
+**Lattice** - Drag around a lattice of interconnected balls.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/lattice) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/lattice/lattice.js)
 
-**Mouse Orbit** - You are the Earth! Move your mouse around to make the Moon orbit around you. [See it live!](http://palmerpaul.com/p5-matter/examples/mouse-orbit)
+**Mouse Orbit** - You are the Earth! Move your mouse around to make the Moon orbit around you.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/mouse-orbit) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/mouse-orbit/mouse-orbit.js)
 
-**Physics Sign** - Physics-aware text! Balls will bounce off the text. Click the mouse to make the sign fall. [See it live!](http://palmerpaul.com/p5-matter/examples/physics-sign)
+**Physics Sign** - Physics-aware text! Balls will bounce off the text. Click the mouse to make the sign fall.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/physics-sign) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/physics-sign/physics-sign.js)
 
 ### All Examples
 
-**Freeze Click** - Click on the falling balls to freeze them in place (click again to unfreeze the ball). [See it live!](http://palmerpaul.com/p5-matter/examples/freeze-click)
+**Freeze Click** - Click on the falling balls to freeze them in place (click again to unfreeze the ball).<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/freeze-click) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/freeze-click/freeze-click.js)
 
-**Pendulum** - Interactive pendulum simulation. [See it live!](http://palmerpaul.com/p5-matter/examples/pendulum)
+**Pendulum** - Interactive pendulum simulation.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/pendulum) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/pendulum/pendulum.js)
 
-**Throw Block** - Throw a block around the screen. [See it live!](http://palmerpaul.com/p5-matter/examples/throw-block)
+**Throw Block** - Throw a block around the screen.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/throw-block) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/throw-block/throw-block.js)
 
-**Flip Gravity** - Change the direction of gravity by clicking your mouse. [See it live!](http://palmerpaul.com/p5-matter/examples/flip-gravity)
+**Flip Gravity** - Change the direction of gravity by clicking your mouse.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/flip-gravity) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/flip-gravity/flip-gravity.js)
 
-**Falling Ball** - Simple simulation of a ball falling with gravity. [See it live!](http://palmerpaul.com/p5-matter/examples/falling-ball)
+**Falling Ball** - Simple simulation of a ball falling with gravity.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/falling-ball) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/falling-ball/falling-ball.js)
 
-**Simple Platform** - Drop boxes onto a floor with realistic collisions by clicking your mouse. [See it live!](http://palmerpaul.com/p5-matter/examples/simple-platform)
+**Simple Platform** - Drop boxes onto a floor with realistic collisions by clicking your mouse.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/simple-platform) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/simple-platform/simple-platform.js)
 
-**Tilted Platform** - Roll balls down a series of tilted platforms with realistic collisions by clicking your mouse. [See it live!](http://palmerpaul.com/p5-matter/examples/tilted-platform)
+**Tilted Platform** - Roll balls down a series of tilted platforms with realistic collisions by clicking your mouse.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/tilted-platform) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/tilted-platform/tilted-platform.js)
 
-**Break Connection** - Click the mouse to break the string connecting two balls. [See it live!](http://palmerpaul.com/p5-matter/examples/break-connection)
+**Break Connection** - Click the mouse to break the string connecting two balls.<br>
+[See it live!](http://palmerpaul.com/p5-matter/examples/break-connection) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/break-connection/break-connection.js)
 
 
 ## Credit
