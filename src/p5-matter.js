@@ -125,6 +125,39 @@ var matter = (function() {
   };
 
   /**
+   * Connects two objects so that they move together. By giving some
+   * options, it can be used to make springs and other elastic objects.
+   *
+   * @param {PhysicalObject} physicalObjectA - One of the physical objects to
+   * connect.
+   * @param {PhysicalObject} physicalObjectB - The other physical object to
+   * connect.
+   * @param {Object} [options] - An object with any
+   * <code>Matter.Constraint</code> properties
+   * ({@link http://brm.io/matter-js/docs/classes/Constraint.html#property_bodyA}).
+   * The most interesting properties are <code>length</code> and
+   * <code>stiffness</code>, which respectively control the "rest length" and
+   * elasticity of the spring.
+   *
+   * @alias matter.connect
+   */
+  var connect = function(physicalObjectA, physicalObjectB, options) {
+    options = options || {};
+    options.bodyA = physicalObjectA.body;
+    options.bodyB = physicalObjectB.body;
+    var constraint = Matter.Constraint.create(options);
+
+    var conn = new Connection(constraint, physicalObjectA, physicalObjectB);
+    physicalObjectA.connections.push(conn);
+    physicalObjectB.connections.push(conn);
+
+    init(); // create the engine if it doesn't already exist
+    Matter.World.addConstraint(engine.world, constraint);
+
+    return conn;
+  };
+
+  /**
    * Change the gravity to be the default. Alias for
    * <code>matter.changeGravity(0, 1)</code>.
    *
@@ -176,13 +209,45 @@ var matter = (function() {
    * call this method. It is important to use this method when you are done
    * with an object in order for things to run smoothly.
    *
-   * @param {PhysicalObject} physicalObject
+   * @param {PhysicalObject|Connection} physicalObjectOrConnection
    *
    * @alias matter.forget
    */
-  var forget = function(physicalObject) {
+  var forget = function(physicalObjectOrConnection) {
     init(); // create the engine if it doesn't already exist
-    Matter.World.remove(engine.world, physicalObject.body);
+
+    if (physicalObjectOrConnection === null) {
+      return;
+    }
+
+    if (physicalObjectOrConnection.body) {
+      var physicalObject = physicalObjectOrConnection;
+
+      var connections = physicalObject.connections;
+      for (var i = connections.length - 1; i >= 0; i--) {
+        forget(connections[i]);
+      }
+
+      Matter.World.remove(engine.world, physicalObject.body);
+    } else if (physicalObjectOrConnection.constraint) {
+      var connection = physicalObjectOrConnection;
+
+      var physObj = connection.physicalObjectA;
+      var index = physObj.connections.lastIndexOf(connection);
+      if (index >= 0) {
+        physObj.connections.splice(index, 1);
+      }
+
+      physObj = connection.physicalObjectB;
+      index = physObj.connections.lastIndexOf(connection);
+      if (index >= 0) {
+        physObj.connections.splice(index, 1);
+      }
+
+      Matter.World.remove(engine.world, connection.constraint);
+    }
+
+    physicalObjectOrConnection.active = false;
   };
 
   /**
@@ -252,6 +317,8 @@ var matter = (function() {
     this.body = body;
     this.width = width;
     this.height = height;
+    this.connections = [];
+    this.active = true;
   };
 
   /**
@@ -342,6 +409,16 @@ var matter = (function() {
     var maxY = height + hgt + bufferZone;
 
     return x < minX || x > maxX || y < minY || y > maxY;
+  };
+
+  /**
+   * Determine if the object is being tracked and updated or if it was
+   * forgotten (see <code>{@link matter.forget}</code>).
+   *
+   * @returns {boolean}
+   */
+  PhysicalObject.prototype.isActive = function() {
+    return this.active;
   };
 
   /**
@@ -478,12 +555,67 @@ var matter = (function() {
     pop();
   };
 
+
+  /**
+   * Represents a connection between two physical objects.
+   *
+   * The constructor for Connection is private. Use {@link matter.connect}
+   * instead.
+   *
+   * @param {Matter.Constraint} constraint
+   * @param {PhysicalObject} physicalObjectA - One of the physical objects to
+   * connect.
+   * @param {PhysicalObject} physicalObjectB - The other physical object to
+   * connect.
+   *
+   * @class
+   * @author Palmer Paul
+   */
+  var Connection = function(constraint, physicalObjectA, physicalObjectB) {
+    this.constraint = constraint;
+    this.physicalObjectA = physicalObjectA;
+    this.physicalObjectB = physicalObjectB;
+    this.active = true;
+  };
+
+  /**
+   * Determine if the connection is being tracked and updated or if it was
+   * forgotten (see <code>{@link matter.forget}</code>).
+   *
+   * @returns {boolean}
+   */
+  Connection.prototype.isActive = function() {
+    return this.active;
+  };
+
+  /**
+   * Draw a line between the connected objects.
+   */
+  Connection.prototype.show = function() {
+    var aX = this.physicalObjectA.getX();
+    var aY = this.physicalObjectA.getY();
+    if (this.constraint.pointA) {
+      aX += this.constraint.pointA.x;
+      aY += this.constraint.pointA.y;
+    }
+
+    var bX = this.physicalObjectB.getX();
+    var bY = this.physicalObjectB.getY();
+    if (this.constraint.pointB) {
+      aX += this.constraint.pointB.x;
+      aY += this.constraint.pointB.y;
+    }
+
+    line(aX, aY, bX, bY);
+  };
+
   return {
     init: init,
     makeBall: makeBall,
     makeBlock: makeBlock,
     makeBarrier: makeBarrier,
     makeSign: makeSign,
+    connect: connect,
     normalGravity: normalGravity,
     invertedGravity: invertedGravity,
     zeroGravity: zeroGravity,
