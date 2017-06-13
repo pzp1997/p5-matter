@@ -1,6 +1,46 @@
 /**
  * The global object for interacting with matter.js. Has a handful of methods
- * for creating physics-aware objects and manipulating the environment.
+ * for creating physics-aware objects and manipulating the environment. Before
+ * you go any further, here are a couple of general notes about the library.
+ *
+ * Throughout the docs, I will refer to <code>Matter.Body</code> properties.
+ * These properties are used to configure some more advanced settings for your
+ * object. You should pass all the properties you want to configure as a
+ * JavaScript object. The most interesting ones are <code>angle</code>,
+ * <code>friction</code>, <code>frictionAir</code>, and
+ * <code>restitution</code>. You can find the full list of properties at
+ * {@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}. (When
+ * you create the options Object, do not prefix the properties with
+ * <code>body.</code>, e.g. if I want to set the initial angle to 30 degrees,
+ * my options would look like <code>{ angle: radians(30) }</code>.)
+ *
+ * All the positioning is done from the center of the object. Note that this
+ * differs slightly from p5.js's default system, which interprets the first
+ * two arguments to <code>rect</code> and <code>text</code> as being the
+ * top-left corner of the object. The system used by this library is more or
+ * less equivalent to setting <code>rectMode(CENTER)</code> and
+ * <code>textAlign(CENTER)</code>. Although not technically necessary, it might
+ * be helpful to set those modes anyway as a reminder.
+ *
+ * For those of you coming from matter.js, here are some of the parallels
+ * between the two libraries. <code>{@link matter.init}</code> calls
+ * <code>Matter.Engine.create</code> and, depending on the passed argument,
+ * <code>Matter.Engine.run</code>. <code>{@link matter.makeBall}</code> and
+ * <code>{@link matter.makeBlock}</code> correspond to
+ * <code>Matter.Body.circle</code> and <code>Matter.Body.rectangle</code>,
+ * respectively. There is no direct equivalent to
+ * <code>{@link matter.makeSign}</code> as far as I am aware.
+ * <code>{@link matter.connnect}</code> creates a new
+ * <code>Matter.Constraint</code> and adds it to the world. The gravity
+ * functions, e.g. <code>{@link matter.changeGravity}</code>, are equivalent to
+ * manipulating <code>Matter.World#gravity</code>.
+ * <code>{@link matter.forget}</code> removes a <code>Matter.Body</code> or
+ * <code>Matter.Constraint</code> from the world, and also removes all
+ * constraints / bodies connected to it. <code>{@link matter.manualTick}</code>
+ * calls <code>Matter.Engine.update</code>. {@link matter.mouseInteraction}
+ * creates a new <code>Matter.Mouse</code> with the appropriate canvas and
+ * pixelRatio, creates a new <code>Matter.MouseConstraint</code> with the newly
+ * created mouse, and adds it to the world.
  *
  * @namespace
  * @requires p5.js
@@ -14,14 +54,15 @@ var matter = (function() {
   var mouseEnabled = [];
 
   /**
-   * Set everything up. It is recommended that you call this in the setup()
-   * function of your p5.js sketch. It is not a big deal if you forget to do
-   * this though, as we will call it for you when you use any other method.
+   * Set everything up. It is recommended that you call this in the
+   * <code>setup</code> function of your p5.js sketch. It is not a big deal if
+   * you forget to do this though, as we will call it for you when you use any
+   * other method.
    *
    * @param {boolean} [manual=false] - Stop matter.js from automatically
    * updating. If you choose to do this, use {@link matter.manualTick} in
-   * your draw() function. In general, this is a bad idea, but it is here in
-   * case you need more control.
+   * your <code>draw</code> function. In general, this is a bad idea, but it is
+   * here in case you need more control.
    *
    * @alias matter.init
    */
@@ -52,8 +93,8 @@ var matter = (function() {
    * @param {number} x - The initial x-coordinate measured from the center.
    * @param {number} y - The initial y-coordinate measured from the center.
    * @param {number} diameter - The diameter of the ball.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @param {Object} [options] - An object with any <code>Matter.Body</code>
+   * properties. See the second paragraph of <code>{@link matter}</code>.
    * @returns {Ball}
    *
    * @alias matter.makeBall
@@ -67,12 +108,12 @@ var matter = (function() {
   /**
    * Make a block with the given parameters.
    *
-   * @param {number} x - The initial x-coordinate measured from the top-left.
-   * @param {number} y - The initial y-coordinate measured from the top-left.
+   * @param {number} x - The initial x-coordinate measured from the center.
+   * @param {number} y - The initial y-coordinate measured from the center.
    * @param {number} width - The width of the block.
    * @param {number} height - The height of the block.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @param {Object} [options] - An object with any <code>Matter.Body</code>
+   * properties. See the second paragraph of <code>{@link matter}</code>.
    * @returns {Block}
    *
    * @alias matter.makeBlock
@@ -87,13 +128,12 @@ var matter = (function() {
    * Make a barrier with the given parameters. Barriers are essentially
    * frozen / immovable blocks. Good for making floor, walls, bumpers, etc.
    *
-   * @param {number} x - The initial x-coordinate measured from the top-left.
-   * @param {number} y - The initial y-coordinate measured from the top-left.
+   * @param {number} x - The initial x-coordinate measured from the center.
+   * @param {number} y - The initial y-coordinate measured from the center.
    * @param {number} width - The width of the barrier.
    * @param {number} height - The height of the barrier.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
-   * Note that the isStatic property will be overriden to true.
+   * @param {Object} [options] - An object with any <code>Matter.Body</code>
+   * properties. See the second paragraph of <code>{@link matter}</code>.
    * @returns {Barrier}
    *
    * @alias matter.makeBarrier
@@ -106,15 +146,16 @@ var matter = (function() {
   };
 
   /**
-   * Make physics-aware text. Its trick is putting a bounding rectangle Block
+   * Make physics-aware text. The trick is putting a bounding rectangle Block
    * around the text. The width and the height of the rectangle are determed
    * dynamically at creation time by inspecting the <code>textSize</code>.
    *
-   * @param {string} text
+   * @param {string} text - The text to display.
    * @param {number} x - The initial x-coordinate measured from the center.
    * @param {number} y - The initial y-coordinate measured from the center.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @param {Object} [options] - An object with any <code>Matter.Body</code>
+   * properties. See the second paragraph of <code>{@link matter}</code>.
+   * @returns {Sign}
    *
    * @alias matter.makeSign
    */
@@ -204,10 +245,10 @@ var matter = (function() {
   };
 
   /**
-   * Stop tracking a particular object. Even if an object goes out of view,
-   * calculations will continue to be performed for that object unless you
-   * call this method. It is important to use this method when you are done
-   * with an object in order for things to run smoothly.
+   * Stop tracking a particular object or connection. Even if an object goes
+   * out of view, calculations will continue to be performed for that object
+   * unless you call this method. It is important to use this method when you
+   * are done with an object in order for things to run smoothly.
    *
    * @param {PhysicalObject|Connection} physicalObjectOrConnection
    *
@@ -252,7 +293,8 @@ var matter = (function() {
 
   /**
    * Manually trigger an update of the physics engine. You only should be
-   * using this if you initially passed a value of true to {@link matter.init}.
+   * using this if you initially passed a value of true to
+   * <code>{@link matter.init}</code>.
    *
    * @alias matter.manualTick
    */
@@ -377,7 +419,7 @@ var matter = (function() {
    *
    * @return {boolean}
    */
-  PhysicalObject.prototype.isFrozen = function () {
+  PhysicalObject.prototype.isFrozen = function() {
     return this.body.isStatic;
   };
 
@@ -442,13 +484,14 @@ var matter = (function() {
   /**
    * Represents a circle that obeys physics.
    *
-   * The constructor for Ball is private. Use {@link matter.makeBall} instead.
+   * The constructor for Ball is private. Use
+   * <code>{@link matter.makeBall}</code> instead.
    *
    * @param {number} x - The initial x-coordinate measured from the center.
    * @param {number} y - The initial y-coordinate measured from the center.
    * @param {number} diameter - The diameter of the ball.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @param {Object} [options] - An object with any <code>Matter.Body</code>
+   * properties. See the second paragraph of <code>{@link matter}</code>.
    *
    * @public
    * @class
@@ -472,7 +515,8 @@ var matter = (function() {
   };
 
   /**
-   * Get the diameter of the ball. Alias for PhysicalObject#getWidth.
+   * Get the diameter of the ball. Alias for
+   * <code>PhysicalObject#getWidth</code>.
    *
    * @returns {number}
    * @function
@@ -498,8 +542,8 @@ var matter = (function() {
    * @param {number} y - The initial y-coordinate measured from the center.
    * @param {number} width - The width of the block.
    * @param {number} height - The height of the block.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @param {Object} [options] - An object with any <code>Matter.Body</code>
+   * properties. See the second paragraph of <code>{@link matter}</code>.
    *
    * @class
    * @augments PhysicalObject
@@ -529,8 +573,8 @@ var matter = (function() {
    * @param {string} text
    * @param {number} x - The initial x-coordinate measured from the center.
    * @param {number} y - The initial y-coordinate measured from the center.
-   * @param {Object} [options] - An object of any Matter.Body properties
-   * ({@link http://brm.io/matter-js/docs/classes/Body.html#property_angle}).
+   * @param {Object} [options] - An object with any <code>Matter.Body</code>
+   * properties. See the second paragraph of <code>{@link matter}</code>.
    *
    * @class
    * @augments Block

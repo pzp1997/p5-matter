@@ -75,6 +75,26 @@
               
                 
                 <li><a
+                  href='#mattermakesign'
+                  class="">
+                  matter.makeSign
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#matterconnect'
+                  class="">
+                  matter.connect
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#matternormalgravity'
                   class="">
                   matter.normalGravity
@@ -98,6 +118,16 @@
                   href='#matterzerogravity'
                   class="">
                   matter.zeroGravity
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#matterchangegravity'
+                  class="">
+                  matter.changeGravity
                   
                 </a>
                 
@@ -178,9 +208,33 @@
                       </a></li>
                       
                       <li><a
+                        href='#PhysicalObject#isFrozen'
+                        class='regular pre-open'>
+                        #isFrozen
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#freeze'
+                        class='regular pre-open'>
+                        #freeze
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#unfreeze'
+                        class='regular pre-open'>
+                        #unfreeze
+                      </a></li>
+                      
+                      <li><a
                         href='#PhysicalObject#isOffCanvas'
                         class='regular pre-open'>
                         #isOffCanvas
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#isActive'
+                        class='regular pre-open'>
+                        #isActive
                       </a></li>
                       
                       <li><a
@@ -243,11 +297,63 @@
               
                 
                 <li><a
-                  href='#barrier'
-                  class="">
-                  Barrier
-                  
+                  href='#sign'
+                  class=" toggle-sibling">
+                  Sign
+                  <span class='icon'>▸</span>
                 </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#Sign#getText'
+                        class='regular pre-open'>
+                        #getText
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#connection'
+                  class=" toggle-sibling">
+                  Connection
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#Connection#isActive'
+                        class='regular pre-open'>
+                        #isActive
+                      </a></li>
+                      
+                      <li><a
+                        href='#Connection#show'
+                        class='regular pre-open'>
+                        #show
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
+                  
+                </div>
                 
                 </li>
               
@@ -275,7 +381,44 @@
   
 
   <p>The global object for interacting with matter.js. Has a handful of methods
-for creating physics-aware objects and manipulating the environment.</p>
+for creating physics-aware objects and manipulating the environment. Before
+you go any further, here are a couple of general notes about the library.</p>
+<p>Throughout the docs, I will refer to <code>Matter.Body</code> properties.
+These properties are used to configure some more advanced settings for your
+object. You should pass all the properties you want to configure as a
+JavaScript object. The most interesting ones are <code>angle</code>,
+<code>friction</code>, <code>frictionAir</code>, and
+<code>restitution</code>. You can find the full list of properties at
+<a href="http://brm.io/matter-js/docs/classes/Body.html#property_angle">http://brm.io/matter-js/docs/classes/Body.html#property_angle</a>. (When
+you create the options Object, do not prefix the properties with
+<code>body.</code>, e.g. if I want to set the initial angle to 30 degrees,
+my options would look like <code>{ angle: radians(30) }</code>.)</p>
+<p>All the positioning is done from the center of the object. Note that this
+differs slightly from p5.js's default system, which interprets the first
+two arguments to <code>rect</code> and <code>text</code> as being the
+top-left corner of the object. The system used by this library is more or
+less equivalent to setting <code>rectMode(CENTER)</code> and
+<code>textAlign(CENTER)</code>. Although not technically necessary, it might
+be helpful to set those modes anyway as a reminder.</p>
+<p>For those of you coming from matter.js, here are some of the parallels
+between the two libraries. <code><a href="#matterinit">matter.init</a></code> calls
+<code>Matter.Engine.create</code> and, depending on the passed argument,
+<code>Matter.Engine.run</code>. <code><a href="#mattermakeball">matter.makeBall</a></code> and
+<code><a href="#mattermakeblock">matter.makeBlock</a></code> correspond to
+<code>Matter.Body.circle</code> and <code>Matter.Body.rectangle</code>,
+respectively. There is no direct equivalent to
+<code><a href="#mattermakesign">matter.makeSign</a></code> as far as I am aware.
+<code><a href="matter.connnect">matter.connnect</a></code> creates a new
+<code>Matter.Constraint</code> and adds it to the world. The gravity
+functions, e.g. <code><a href="#matterchangegravity">matter.changeGravity</a></code>, are equivalent to
+manipulating <code>Matter.World#gravity</code>.
+<code><a href="#matterforget">matter.forget</a></code> removes a <code>Matter.Body</code> or
+<code>Matter.Constraint</code> from the world, and also removes all
+constraints / bodies connected to it. <code><a href="#mattermanualtick">matter.manualTick</a></code>
+calls <code>Matter.Engine.update</code>. <a href="#mattermouseinteraction">matter.mouseInteraction</a>
+creates a new <code>Matter.Mouse</code> with the appropriate canvas and
+pixelRatio, creates a new <code>Matter.MouseConstraint</code> with the newly
+created mouse, and adds it to the world.</p>
 
 
   <div class='pre p1 fill-light mt0'>matter</div>
@@ -322,9 +465,10 @@ for creating physics-aware objects and manipulating the environment.</p>
   </div>
   
 
-  <p>Set everything up. It is recommended that you call this in the setup()
-function of your p5.js sketch. It is not a big deal if you forget to do
-this though, as we will call it for you when you use any other method.</p>
+  <p>Set everything up. It is recommended that you call this in the
+<code>setup</code> function of your p5.js sketch. It is not a big deal if
+you forget to do this though, as we will call it for you when you use any
+other method.</p>
 
 
   <div class='pre p1 fill-light mt0'>matter.init(manual: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</div>
@@ -350,8 +494,12 @@ this though, as we will call it for you when you use any other method.</p>
 updating. If you choose to do this, use 
 <a href="#mattermanualtick">matter.manualTick</a>
  in
-your draw() function. In general, this is a bad idea, but it is here in
-case you need more control.
+your 
+<code>
+draw
+</code>
+ function. In general, this is a bad idea, but it is
+here in case you need more control.
 
           </div>
           
@@ -439,10 +587,16 @@ case you need more control.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    An object of any Matter.Body properties
-(
-<a href="http://brm.io/matter-js/docs/classes/Body.html#property_angle">http://brm.io/matter-js/docs/classes/Body.html#property_angle</a>
-).
+	    An object with any 
+<code>
+Matter.Body
+</code>
+
+properties. See the second paragraph of 
+<code>
+<a href="#matter">matter</a>
+</code>
+.
 
           </div>
           
@@ -511,7 +665,7 @@ case you need more control.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial x-coordinate measured from the top-left.
+	    The initial x-coordinate measured from the center.
 
           </div>
           
@@ -520,7 +674,7 @@ case you need more control.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial y-coordinate measured from the top-left.
+	    The initial y-coordinate measured from the center.
 
           </div>
           
@@ -547,10 +701,16 @@ case you need more control.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    An object of any Matter.Body properties
-(
-<a href="http://brm.io/matter-js/docs/classes/Body.html#property_angle">http://brm.io/matter-js/docs/classes/Body.html#property_angle</a>
-).
+	    An object with any 
+<code>
+Matter.Body
+</code>
+
+properties. See the second paragraph of 
+<code>
+<a href="#matter">matter</a>
+</code>
+.
 
           </div>
           
@@ -598,10 +758,11 @@ case you need more control.
   </div>
   
 
-  <p>Make a barrier with the given parameters.</p>
+  <p>Make a barrier with the given parameters. Barriers are essentially
+frozen / immovable blocks. Good for making floor, walls, bumpers, etc.</p>
 
 
-  <div class='pre p1 fill-light mt0'>matter.makeBarrier(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, width: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, height: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="#barrier">Barrier</a></div>
+  <div class='pre p1 fill-light mt0'>matter.makeBarrier(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, width: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, height: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): Barrier</div>
   
   
 
@@ -619,7 +780,7 @@ case you need more control.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial x-coordinate measured from the top-left.
+	    The initial x-coordinate measured from the center.
 
           </div>
           
@@ -628,7 +789,7 @@ case you need more control.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial y-coordinate measured from the top-left.
+	    The initial y-coordinate measured from the center.
 
           </div>
           
@@ -655,11 +816,16 @@ case you need more control.
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    An object of any Matter.Body properties
-(
-<a href="http://brm.io/matter-js/docs/classes/Body.html#property_angle">http://brm.io/matter-js/docs/classes/Body.html#property_angle</a>
-).
-Note that the isStatic property will be overriden to true.
+	    An object with any 
+<code>
+Matter.Body
+</code>
+
+properties. See the second paragraph of 
+<code>
+<a href="#matter">matter</a>
+</code>
+.
 
           </div>
           
@@ -673,11 +839,219 @@ Note that the isStatic property will be overriden to true.
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="#barrier">Barrier</a></code>:
+      <code>Barrier</code>:
         
 
       
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='mattermakesign'>
+      matter.makeSign
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Make physics-aware text. The trick is putting a bounding rectangle Block
+around the text. The width and the height of the rectangle are determed
+dynamically at creation time by inspecting the <code>textSize</code>.</p>
+
+
+  <div class='pre p1 fill-light mt0'>matter.makeSign(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?): <a href="#sign">Sign</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The text to display.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The initial x-coordinate measured from the center.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The initial y-coordinate measured from the center.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    An object with any 
+<code>
+Matter.Body
+</code>
+
+properties. See the second paragraph of 
+<code>
+<a href="#matter">matter</a>
+</code>
+.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#sign">Sign</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='matterconnect'>
+      matter.connect
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Connects two objects so that they move together. By giving some
+options, it can be used to make springs and other elastic objects.</p>
+
+
+  <div class='pre p1 fill-light mt0'>matter.connect(physicalObjectA: <a href="#physicalobject">PhysicalObject</a>, physicalObjectB: <a href="#physicalobject">PhysicalObject</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>physicalObjectA</span> <code class='quiet'>(<a href="#physicalobject">PhysicalObject</a>)</code>
+	    One of the physical objects to
+connect.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>physicalObjectB</span> <code class='quiet'>(<a href="#physicalobject">PhysicalObject</a>)</code>
+	    The other physical object to
+connect.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    An object with any
+
+<code>
+Matter.Constraint
+</code>
+ properties
+(
+<a href="http://brm.io/matter-js/docs/classes/Constraint.html#property_bodyA">http://brm.io/matter-js/docs/classes/Constraint.html#property_bodyA</a>
+).
+The most interesting properties are 
+<code>
+length
+</code>
+ and
+
+<code>
+stiffness
+</code>
+, which respectively control the "rest length" and
+elasticity of the spring.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
   
 
   
@@ -707,7 +1081,8 @@ Note that the isStatic property will be overriden to true.
   </div>
   
 
-  <p>Change the gravity to be the default.</p>
+  <p>Change the gravity to be the default. Alias for
+<code>matter.changeGravity(0, 1)</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>matter.normalGravity()</div>
@@ -754,7 +1129,8 @@ Note that the isStatic property will be overriden to true.
   </div>
   
 
-  <p>Change the gravity to be upside-down.</p>
+  <p>Change the gravity to be upside-down. Alias for
+<code>matter.changeGravity(0, -1)</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>matter.invertedGravity()</div>
@@ -801,7 +1177,8 @@ Note that the isStatic property will be overriden to true.
   </div>
   
 
-  <p>Change the gravity to be zero, i.e. disable gravity.</p>
+  <p>Change the gravity to be zero, i.e. disable gravity. Alias for
+<code>matter.changeGravity(0, 0)</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>matter.zeroGravity()</div>
@@ -840,21 +1217,18 @@ Note that the isStatic property will be overriden to true.
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='matterforget'>
-      matter.forget
+    <h3 class='fl m0' id='matterchangegravity'>
+      matter.changeGravity
     </h3>
     
     
   </div>
   
 
-  <p>Stop tracking a particular object. Even if an object goes out of view,
-calculations will continue to be performed for that object unless you
-call this method. It is important to use this method when you are done
-with an object in order for things to run smoothly.</p>
+  <p>Change the strength and direction of gravity.</p>
 
 
-  <div class='pre p1 fill-light mt0'>matter.forget(physicalObject: <a href="#physicalobject">PhysicalObject</a>)</div>
+  <div class='pre p1 fill-light mt0'>matter.changeGravity(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
   
   
 
@@ -871,7 +1245,90 @@ with an object in order for things to run smoothly.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>physicalObject</span> <code class='quiet'>(<a href="#physicalobject">PhysicalObject</a>)</code>
+            <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The gravitational acceleration along the x-axis. A
+sensible value is somewhere in the range of 
+[
+-1.. 1
+]
+.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The gravitational acceleration along the y-axis. A
+sensible value is somewhere in the range of 
+[
+-1.. 1
+]
+.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='matterforget'>
+      matter.forget
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Stop tracking a particular object or connection. Even if an object goes
+out of view, calculations will continue to be performed for that object
+unless you call this method. It is important to use this method when you
+are done with an object in order for things to run smoothly.</p>
+
+
+  <div class='pre p1 fill-light mt0'>matter.forget(physicalObjectOrConnection: (<a href="#physicalobject">PhysicalObject</a> | <a href="#connection">Connection</a>))</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>physicalObjectOrConnection</span> <code class='quiet'>((<a href="#physicalobject">PhysicalObject</a> | <a href="#connection">Connection</a>))</code>
 	    
           </div>
           
@@ -912,7 +1369,8 @@ with an object in order for things to run smoothly.</p>
   
 
   <p>Manually trigger an update of the physics engine. You only should be
-using this if you initially passed a value of true to <a href="#matterinit">matter.init</a>.</p>
+using this if you initially passed a value of true to
+<code><a href="#matterinit">matter.init</a></code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>matter.manualTick()</div>
@@ -959,11 +1417,11 @@ using this if you initially passed a value of true to <a href="#matterinit">matt
   </div>
   
 
-  <p>Toggle mouse interaction. This lets you apply forces to physical objects
-by clicking and dragging on them. Disabled by default.</p>
+  <p>Enable mouse interaction for the given canvas. This lets you apply forces
+to physical objects by clicking and dragging on them.</p>
 
 
-  <div class='pre p1 fill-light mt0'>matter.mouseInteraction(enable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</div>
+  <div class='pre p1 fill-light mt0'>matter.mouseInteraction(canvas: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
   
   
 
@@ -980,9 +1438,19 @@ by clicking and dragging on them. Disabled by default.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>enable</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
-	    Enables mouse interactions if true, disables
-them if false.
+            <span class='code bold'>canvas</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    The canvas for which to enable mouse
+interaction. You can get the canvas object for your sketch by storing the
+return value of 
+<code>
+createCanvas
+</code>
+. If not supplied, defaults to
+
+<code>
+window.canvas
+</code>
+.
 
           </div>
           
@@ -1355,6 +1823,152 @@ create instances of it. You do not need to worry about this though.</p>
       </div>
     </div>
   
+    <div class='border-bottom' id='PhysicalObject#isFrozen'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>isFrozen()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Check if the object is frozen, i.e. static.</p>
+
+
+  <div class='pre p1 fill-light mt0'>isFrozen(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#freeze'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>freeze()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Freeze the object in place, causing it to stop moving.</p>
+
+
+  <div class='pre p1 fill-light mt0'>freeze()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#unfreeze'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>unfreeze()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Unfreeze the object, causing it to start moving again.</p>
+
+
+  <div class='pre p1 fill-light mt0'>unfreeze()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
     <div class='border-bottom' id='PhysicalObject#isOffCanvas'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
@@ -1396,6 +2010,61 @@ create instances of it. You do not need to worry about this though.</p>
         </div>
       
     </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#isActive'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>isActive()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Determine if the object is being tracked and updated or if it was
+forgotten (see <code><a href="#matterforget">matter.forget</a></code>).</p>
+
+
+  <div class='pre p1 fill-light mt0'>isActive(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
   
 
   
@@ -1495,7 +2164,8 @@ this is optional, feel free to draw the objects however you would like.</p>
   
 
   <p>Represents a circle that obeys physics.</p>
-<p>The constructor for Ball is private. Use <a href="#mattermakeball">matter.makeBall</a> instead.</p>
+<p>The constructor for Ball is private. Use
+<code><a href="#mattermakeball">matter.makeBall</a></code> instead.</p>
 
 
   <div class='pre p1 fill-light mt0'>new Ball(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, diameter: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
@@ -1550,10 +2220,16 @@ this is optional, feel free to draw the objects however you would like.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    An object of any Matter.Body properties
-(
-<a href="http://brm.io/matter-js/docs/classes/Body.html#property_angle">http://brm.io/matter-js/docs/classes/Body.html#property_angle</a>
-).
+	    An object with any 
+<code>
+Matter.Body
+</code>
+
+properties. See the second paragraph of 
+<code>
+<a href="#matter">matter</a>
+</code>
+.
 
           </div>
           
@@ -1588,7 +2264,8 @@ this is optional, feel free to draw the objects however you would like.</p>
 
   
 
-  <p>Get the diameter of the ball. Alias for PhysicalObject#getWidth.</p>
+  <p>Get the diameter of the ball. Alias for
+<code>PhysicalObject#getWidth</code>.</p>
 
 
   <div class='pre p1 fill-light mt0'>getDiameter(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
@@ -1737,7 +2414,7 @@ instead.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial x-coordinate measured from the top-left.
+	    The initial x-coordinate measured from the center.
 
           </div>
           
@@ -1746,7 +2423,7 @@ instead.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial y-coordinate measured from the top-left.
+	    The initial y-coordinate measured from the center.
 
           </div>
           
@@ -1773,10 +2450,16 @@ instead.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    An object of any Matter.Body properties
-(
-<a href="http://brm.io/matter-js/docs/classes/Body.html#property_angle">http://brm.io/matter-js/docs/classes/Body.html#property_angle</a>
-).
+	    An object with any 
+<code>
+Matter.Body
+</code>
+
+properties. See the second paragraph of 
+<code>
+<a href="#matter">matter</a>
+</code>
+.
 
           </div>
           
@@ -1808,20 +2491,19 @@ instead.</p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='barrier'>
-      Barrier
+    <h3 class='fl m0' id='sign'>
+      Sign
     </h3>
     
     
   </div>
   
 
-  <p>Represents an immovable Block. Good for making floor, walls, bumpers, etc.</p>
-<p>The constructor for Barrier is private. Use <a href="#mattermakebarrier">matter.makeBarrier</a>
-instead.</p>
+  <p>Represents physics-aware text.</p>
+<p>The constructor for Sign is private. Use <a href="#mattermakesign">matter.makeSign</a> instead.</p>
 
 
-  <div class='pre p1 fill-light mt0'>new Barrier(x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, width: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, height: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
+  <div class='pre p1 fill-light mt0'>new Sign(text: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, x: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, y: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
   
   
     <p>
@@ -1845,8 +2527,16 @@ instead.</p>
       
         <div class='space-bottom0'>
           <div>
+            <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
             <span class='code bold'>x</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial x-coordinate measured from the top-left.
+	    The initial x-coordinate measured from the center.
 
           </div>
           
@@ -1855,25 +2545,7 @@ instead.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>y</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The initial y-coordinate measured from the top-left.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>width</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The width of the block.
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>height</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
-	    The height of the block.
+	    The initial y-coordinate measured from the center.
 
           </div>
           
@@ -1882,10 +2554,16 @@ instead.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    An object of any Matter.Body properties
-(
-<a href="http://brm.io/matter-js/docs/classes/Body.html#property_angle">http://brm.io/matter-js/docs/classes/Body.html#property_angle</a>
-).
+	    An object with any 
+<code>
+Matter.Body
+</code>
+
+properties. See the second paragraph of 
+<code>
+<a href="#matter">matter</a>
+</code>
+.
 
           </div>
           
@@ -1903,6 +2581,255 @@ instead.</p>
   
 
   
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='Sign#getText'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getText()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Get the text of the sign.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getText(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='connection'>
+      Connection
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Represents a connection between two physical objects.</p>
+<p>The constructor for Connection is private. Use <a href="#matterconnect">matter.connect</a>
+instead.</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Connection(constraint: Matter.Constraint, physicalObjectA: <a href="#physicalobject">PhysicalObject</a>, physicalObjectB: <a href="#physicalobject">PhysicalObject</a>)</div>
+  
+  
+
+  
+  
+  
+  <div>Author: Palmer Paul</div>
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>constraint</span> <code class='quiet'>(Matter.Constraint)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>physicalObjectA</span> <code class='quiet'>(<a href="#physicalobject">PhysicalObject</a>)</code>
+	    One of the physical objects to
+connect.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>physicalObjectB</span> <code class='quiet'>(<a href="#physicalobject">PhysicalObject</a>)</code>
+	    The other physical object to
+connect.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='Connection#isActive'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>isActive()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Determine if the connection is being tracked and updated or if it was
+forgotten (see <code><a href="#matterforget">matter.forget</a></code>).</p>
+
+
+  <div class='pre p1 fill-light mt0'>isActive(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Connection#show'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>show()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Draw a line between the connected objects.</p>
+
+
+  <div class='pre p1 fill-light mt0'>show()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
 
   
 
