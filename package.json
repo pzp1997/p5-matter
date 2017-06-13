@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Seamlessly integrate matter.js with p5.js",
   "scripts": {
+    "minify": "uglifyjs --keep-fnames --source-map --output src/p5-matter.min.js src/p5-matter.js",
     "build-docs": "documentation build src/p5-matter.js -f html -o docs/"
   },
   "main": "src/p5-matter.js",
@@ -11,5 +12,9 @@
   "dependencies": {
     "matter-js": "^0.12.0",
     "p5": "^0.5.11"
+  },
+  "devDependencies": {
+    "documentation": "^4.0.0-rc.1",
+    "uglify-js": "^3.0.15"
   }
 }
