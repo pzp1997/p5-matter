@@ -8,7 +8,7 @@
   },
   "main": "src/p5-matter.js",
   "author": "Palmer Paul <pzpaul2002@yahoo.com>",
-  "license": "MIT",
+  "license": "LGPL-3.0",
   "dependencies": {
     "matter-js": "^0.12.0",
     "p5": "^0.5.11"
