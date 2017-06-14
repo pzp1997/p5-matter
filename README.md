@@ -6,6 +6,13 @@ The aim of this library is to make it simple to use matter.js, a JavaScript base
 p5-matter makes the interplay between p5.js and matter.js more natural. The API will feel more intuitive for someone with a p5.js background. Default rendering of physical objects is provided in p5.js. We resolve the places where p5.js and matter.js clash, such as the positioning system for rectangles for you. p5-matter also supports features that do not exist in matter.js; "signs" are text that respond to collisions and other physics phenomena.
 
 
+## Starter Template
+
+Use our starter template to get p5-matter up and running as quickly as possible. The template includes all the dependencies, p5.js, matter.js, and p5-matter, and comes with a small demo program. You can run it by unzipping the download and opening the index.html file in any browser. To start creating, just modify the sketch.js file.
+
+**[Download the Starter Template!](http://palmerpaul.com/p5-matter/p5-matter-template.zip)**
+
+
 ## Documentation
 
 Everything you can do as a user of p5-matter exists in the global `matter` object. This object has a handful of methods for creating physics-aware objects and manipulating the environment. See the [documentation](http://palmerpaul.com/p5-matter/docs) for details.
