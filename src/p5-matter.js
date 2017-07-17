@@ -47,11 +47,25 @@
  * @requires matter.js
  * @author Palmer Paul
  */
-var matter = (function() {
-  'use strict';
+;(function (namespace) {
+  'use strict'
 
-  var engine = null;
-  var mouseEnabled = [];
+  namespace = namespace || {}
+  namespace.makeBall = makeBall
+  namespace.makeBlock = makeBlock
+  namespace.makeBarrier = makeBarrier
+  namespace.makeSign = makeSign
+  namespace.connect = connect
+  namespace.normalGravity = normalGravity
+  namespace.invertedGravity = invertedGravity
+  namespace.zeroGravity = zeroGravity
+  namespace.changeGravity = changeGravity
+  namespace.forget = forget
+  namespace.manualTick = manualTick
+  namespace.mouseInteraction = mouseInteraction
+
+  var engine = null
+  var mouseEnabled = []
 
   /**
    * Set everything up. It is recommended that you call this in the
@@ -64,16 +78,16 @@ var matter = (function() {
    * your <code>draw</code> function. In general, this is a bad idea, but it is
    * here in case you need more control.
    *
-   * @alias matter.init
+   * @private
    */
-  var init = function(manual) {
+  var init = function (manual) {
     if (engine === null) {
-      engine = Matter.Engine.create();
+      engine = Matter.Engine.create()
       if (!manual) {
-        Matter.Engine.run(engine);
+        Matter.Engine.run(engine)
       }
     }
-  };
+  }
 
   /**
    * Add a physical object to the world. Helper for the make*() functions.
@@ -82,10 +96,10 @@ var matter = (function() {
    *
    * @private
    */
-  var addToWorld = function(physicalObject) {
-    init(); // create the engine if it doesn't already exist
-    Matter.World.addBody(engine.world, physicalObject.body);
-  };
+  var addToWorld = function (physicalObject) {
+    init() // create the engine if it doesn't already exist
+    Matter.World.addBody(engine.world, physicalObject.body)
+  }
 
   /**
    * Make a ball with the given parameters.
@@ -99,11 +113,11 @@ var matter = (function() {
    *
    * @alias matter.makeBall
    */
-  var makeBall = function(x, y, diameter, options) {
-    var ball = new Ball(x, y, diameter, options);
-    addToWorld(ball);
-    return ball;
-  };
+  var makeBall = function (x, y, diameter, options) {
+    var ball = new Ball(x, y, diameter, options)
+    addToWorld(ball)
+    return ball
+  }
 
   /**
    * Make a block with the given parameters.
@@ -118,11 +132,11 @@ var matter = (function() {
    *
    * @alias matter.makeBlock
    */
-  var makeBlock = function(x, y, width, height, options) {
-    var block = new Block(x, y, width, height, options);
-    addToWorld(block);
-    return block;
-  };
+  var makeBlock = function (x, y, width, height, options) {
+    var block = new Block(x, y, width, height, options)
+    addToWorld(block)
+    return block
+  }
 
   /**
    * Make a barrier with the given parameters. Barriers are essentially
@@ -138,12 +152,12 @@ var matter = (function() {
    *
    * @alias matter.makeBarrier
    */
-  var makeBarrier = function(x, y, width, height, options) {
-    var barrier = new Block(x, y, width, height, options);
-    barrier.freeze();
-    addToWorld(barrier);
-    return barrier;
-  };
+  var makeBarrier = function (x, y, width, height, options) {
+    var barrier = new Block(x, y, width, height, options)
+    barrier.freeze()
+    addToWorld(barrier)
+    return barrier
+  }
 
   /**
    * Make physics-aware text. The trick is putting a bounding rectangle Block
@@ -159,11 +173,11 @@ var matter = (function() {
    *
    * @alias matter.makeSign
    */
-  var makeSign = function(text, x, y, options) {
-    var sign = new Sign(text, x, y, options);
-    addToWorld(sign);
-    return sign;
-  };
+  var makeSign = function (text, x, y, options) {
+    var sign = new Sign(text, x, y, options)
+    addToWorld(sign)
+    return sign
+  }
 
   /**
    * Connects two objects so that they move together. By giving some
@@ -182,21 +196,21 @@ var matter = (function() {
    *
    * @alias matter.connect
    */
-  var connect = function(physicalObjectA, physicalObjectB, options) {
-    options = options || {};
-    options.bodyA = physicalObjectA.body;
-    options.bodyB = physicalObjectB.body;
-    var constraint = Matter.Constraint.create(options);
+  var connect = function (physicalObjectA, physicalObjectB, options) {
+    options = options || {}
+    options.bodyA = physicalObjectA.body
+    options.bodyB = physicalObjectB.body
+    var constraint = Matter.Constraint.create(options)
 
-    var conn = new Connection(constraint, physicalObjectA, physicalObjectB);
-    physicalObjectA.connections.push(conn);
-    physicalObjectB.connections.push(conn);
+    var conn = new Connection(constraint, physicalObjectA, physicalObjectB)
+    physicalObjectA.connections.push(conn)
+    physicalObjectB.connections.push(conn)
 
-    init(); // create the engine if it doesn't already exist
-    Matter.World.addConstraint(engine.world, constraint);
+    init() // create the engine if it doesn't already exist
+    Matter.World.addConstraint(engine.world, constraint)
 
-    return conn;
-  };
+    return conn
+  }
 
   /**
    * Change the gravity to be the default. Alias for
@@ -204,9 +218,9 @@ var matter = (function() {
    *
    * @alias matter.normalGravity
    */
-  var normalGravity = function() {
-    changeGravity(0, 1);
-  };
+  var normalGravity = function () {
+    changeGravity(0, 1)
+  }
 
   /**
    * Change the gravity to be upside-down. Alias for
@@ -214,9 +228,9 @@ var matter = (function() {
    *
    * @alias matter.invertedGravity
    */
-  var invertedGravity = function() {
-    changeGravity(0, -1);
-  };
+  var invertedGravity = function () {
+    changeGravity(0, -1)
+  }
 
   /**
    * Change the gravity to be zero, i.e. disable gravity. Alias for
@@ -224,9 +238,9 @@ var matter = (function() {
    *
    * @alias matter.zeroGravity
    */
-  var zeroGravity = function() {
-    changeGravity(0, 0);
-  };
+  var zeroGravity = function () {
+    changeGravity(0, 0)
+  }
 
   /**
    * Change the strength and direction of gravity.
@@ -238,11 +252,11 @@ var matter = (function() {
    *
    * @alias matter.changeGravity
    */
-  var changeGravity = function(x, y) {
-    init(); // create the engine if it doesn't already exist
-    engine.world.gravity.x = x;
-    engine.world.gravity.y = y;
-  };
+  var changeGravity = function (x, y) {
+    init() // create the engine if it doesn't already exist
+    engine.world.gravity.x = x
+    engine.world.gravity.y = y
+  }
 
   /**
    * Stop tracking a particular object or connection. Even if an object goes
@@ -254,42 +268,42 @@ var matter = (function() {
    *
    * @alias matter.forget
    */
-  var forget = function(physicalObjectOrConnection) {
-    init(); // create the engine if it doesn't already exist
+  var forget = function (physicalObjectOrConnection) {
+    init() // create the engine if it doesn't already exist
 
     if (physicalObjectOrConnection === null) {
-      return;
+      return
     }
 
     if (physicalObjectOrConnection.body) {
-      var physicalObject = physicalObjectOrConnection;
+      var physicalObject = physicalObjectOrConnection
 
-      var connections = physicalObject.connections;
+      var connections = physicalObject.connections
       for (var i = connections.length - 1; i >= 0; i--) {
-        forget(connections[i]);
+        forget(connections[i])
       }
 
-      Matter.World.remove(engine.world, physicalObject.body);
+      Matter.World.remove(engine.world, physicalObject.body)
     } else if (physicalObjectOrConnection.constraint) {
-      var connection = physicalObjectOrConnection;
+      var connection = physicalObjectOrConnection
 
-      var physObj = connection.physicalObjectA;
-      var index = physObj.connections.lastIndexOf(connection);
+      var physObj = connection.physicalObjectA
+      var index = physObj.connections.lastIndexOf(connection)
       if (index >= 0) {
-        physObj.connections.splice(index, 1);
+        physObj.connections.splice(index, 1)
       }
 
-      physObj = connection.physicalObjectB;
-      index = physObj.connections.lastIndexOf(connection);
+      physObj = connection.physicalObjectB
+      index = physObj.connections.lastIndexOf(connection)
       if (index >= 0) {
-        physObj.connections.splice(index, 1);
+        physObj.connections.splice(index, 1)
       }
 
-      Matter.World.remove(engine.world, connection.constraint);
+      Matter.World.remove(engine.world, connection.constraint)
     }
 
-    physicalObjectOrConnection.active = false;
-  };
+    physicalObjectOrConnection.active = false
+  }
 
   /**
    * Manually trigger an update of the physics engine. You only should be
@@ -298,10 +312,10 @@ var matter = (function() {
    *
    * @alias matter.manualTick
    */
-  var manualTick = function() {
-    init(true); // create the engine if it doesn't already exist
-    Matter.Engine.update(engine);
-  };
+  var manualTick = function () {
+    init(true) // create the engine if it doesn't already exist
+    Matter.Engine.update(engine)
+  }
 
   /**
    * Enable mouse interaction for the given canvas. This lets you apply forces
@@ -314,30 +328,30 @@ var matter = (function() {
    *
    * @alias matter.mouseInteraction
    */
-  var mouseInteraction = function(canvas) {
-    var canvasElt;
+  var mouseInteraction = function (canvas) {
+    var canvasElt
 
     if (canvas && canvas.elt) {
-      canvasElt = canvas.elt;
+      canvasElt = canvas.elt
     } else if (window && window.canvas) {
-      canvasElt = window.canvas;
+      canvasElt = window.canvas
     } else {
-      canvasElt = null;
+      canvasElt = null
     }
 
     if (canvasElt && !mouseEnabled.includes(canvasElt)) {
-      var mouse = Matter.Mouse.create(canvasElt);
-      mouse.pixelRatio = pixelDensity();
+      var mouse = Matter.Mouse.create(canvasElt)
+      mouse.pixelRatio = pixelDensity()
 
-      init(); // create the engine if it doesn't already exist
+      init() // create the engine if it doesn't already exist
       Matter.World.add(engine.world,
         Matter.MouseConstraint.create(engine, {
           mouse: mouse
-        }));
+        }))
 
-      mouseEnabled.push(canvasElt);
+      mouseEnabled.push(canvasElt)
     }
-  };
+  }
 
   /**
    * Represents any object that obeys physics. Serves as the parent class for
@@ -356,86 +370,86 @@ var matter = (function() {
    * @class
    * @author Palmer Paul
    */
-  var PhysicalObject = function(body, width, height) {
+  var PhysicalObject = function (body, width, height) {
     if (this.constructor === PhysicalObject) {
-      throw new Error("PhysicalObject is an abstract class, " +
-        "so you can't make instances of it!");
+      throw new Error('PhysicalObject is an abstract class, ' +
+        'so you can\'t make instances of it!')
     }
 
-    this.body = body;
-    this.width = width;
-    this.height = height;
-    this.connections = [];
-    this.active = true;
-  };
+    this.body = body
+    this.width = width
+    this.height = height
+    this.connections = []
+    this.active = true
+  }
 
   /**
    * Get the current x-coordinate of the object.
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getX = function() {
-    return this.body.position.x;
-  };
+  PhysicalObject.prototype.getX = function () {
+    return this.body.position.x
+  }
 
   /**
    * Get the current y-coordinate of the object.
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getY = function() {
-    return this.body.position.y;
-  };
+  PhysicalObject.prototype.getY = function () {
+    return this.body.position.y
+  }
 
   /**
    * Get the width of the object.
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getWidth = function() {
-    return this.width;
-  };
+  PhysicalObject.prototype.getWidth = function () {
+    return this.width
+  }
 
   /**
    * Get the height of the object.
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getHeight = function() {
-    return this.height;
-  };
+  PhysicalObject.prototype.getHeight = function () {
+    return this.height
+  }
 
   /**
    * Get the current angle of the object in radians.
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getAngle = function() {
-    return this.body.angle;
-  };
+  PhysicalObject.prototype.getAngle = function () {
+    return this.body.angle
+  }
 
   /**
    * Check if the object is frozen, i.e. static.
    *
    * @return {boolean}
    */
-  PhysicalObject.prototype.isFrozen = function() {
-    return this.body.isStatic;
-  };
+  PhysicalObject.prototype.isFrozen = function () {
+    return this.body.isStatic
+  }
 
   /**
    * Freeze the object in place, causing it to stop moving.
    */
-  PhysicalObject.prototype.freeze = function() {
-    Matter.Body.setStatic(this.body, true);
-  };
+  PhysicalObject.prototype.freeze = function () {
+    Matter.Body.setStatic(this.body, true)
+  }
 
   /**
    * Unfreeze the object, causing it to start moving again.
    */
-  PhysicalObject.prototype.unfreeze = function() {
-    Matter.Body.setStatic(this.body, false);
-  };
+  PhysicalObject.prototype.unfreeze = function () {
+    Matter.Body.setStatic(this.body, false)
+  }
 
   /**
    * Determine if the object is off the canvas.
@@ -443,21 +457,21 @@ var matter = (function() {
    * @param {number} [bufferZone=0] - Extra room to leave around the edges.
    * @returns {boolean}
    */
-  PhysicalObject.prototype.isOffCanvas = function(bufferZone) {
-    bufferZone = bufferZone || 0;
+  PhysicalObject.prototype.isOffCanvas = function (bufferZone) {
+    bufferZone = bufferZone || 0
 
-    var x = this.getX();
-    var y = this.getY();
-    var wid = this.getWidth();
-    var hgt = this.getHeight();
+    var x = this.getX()
+    var y = this.getY()
+    var wid = this.getWidth()
+    var hgt = this.getHeight()
 
-    var minX = -(wid + bufferZone);
-    var minY = -(hgt + bufferZone);
-    var maxX = width + wid + bufferZone;
-    var maxY = height + hgt + bufferZone;
+    var minX = -(wid + bufferZone)
+    var minY = -(hgt + bufferZone)
+    var maxX = width + wid + bufferZone
+    var maxY = height + hgt + bufferZone
 
-    return x < minX || x > maxX || y < minY || y > maxY;
-  };
+    return x < minX || x > maxX || y < minY || y > maxY
+  }
 
   /**
    * Determine if the object is being tracked and updated or if it was
@@ -465,9 +479,9 @@ var matter = (function() {
    *
    * @returns {boolean}
    */
-  PhysicalObject.prototype.isActive = function() {
-    return this.active;
-  };
+  PhysicalObject.prototype.isActive = function () {
+    return this.active
+  }
 
   /**
    * Draw the object to the screen. Respects the current style settings. Using
@@ -475,11 +489,10 @@ var matter = (function() {
    *
    * @abstract
    */
-  PhysicalObject.prototype.show = function() {
-    throw new Error("PhysicalObject.show is an abstract method, " +
-      "so you can't invoke it!");
-  };
-
+  PhysicalObject.prototype.show = function () {
+    throw new Error('PhysicalObject.show is an abstract method, ' +
+      'so you can\'t invoke it!')
+  }
 
   /**
    * Represents a circle that obeys physics.
@@ -498,21 +511,21 @@ var matter = (function() {
    * @augments PhysicalObject
    * @author Palmer Paul
    */
-  var Ball = function(x, y, diameter, options) {
-    var body = Matter.Bodies.circle(x, y, diameter / 2, options);
-    PhysicalObject.call(this, body, diameter, diameter);
-  };
-  Ball.prototype = Object.create(PhysicalObject.prototype);
-  Ball.prototype.constructor = Ball;
+  var Ball = function (x, y, diameter, options) {
+    var body = Matter.Bodies.circle(x, y, diameter / 2, options)
+    PhysicalObject.call(this, body, diameter, diameter)
+  }
+  Ball.prototype = Object.create(PhysicalObject.prototype)
+  Ball.prototype.constructor = Ball
 
-  Ball.prototype.show = function() {
-    push();
-    translate(this.getX(), this.getY());
-    rotate(this.getAngle());
-    ellipseMode(CENTER);
-    ellipse(0, 0, this.getWidth(), this.getHeight());
-    pop();
-  };
+  Ball.prototype.show = function () {
+    push()
+    translate(this.getX(), this.getY())
+    rotate(this.getAngle())
+    ellipseMode(CENTER)
+    ellipse(0, 0, this.getWidth(), this.getHeight())
+    pop()
+  }
 
   /**
    * Get the diameter of the ball. Alias for
@@ -521,16 +534,16 @@ var matter = (function() {
    * @returns {number}
    * @function
    */
-  Ball.prototype.getDiameter = Ball.prototype.getWidth;
+  Ball.prototype.getDiameter = Ball.prototype.getWidth
 
   /**
    * Get the radius of the ball.
    *
    * @returns {number}
    */
-  Ball.prototype.getRadius = function() {
-    return this.getDiameter() / 2;
-  };
+  Ball.prototype.getRadius = function () {
+    return this.getDiameter() / 2
+  }
 
   /**
    * Represents a rectangle that obeys physics.
@@ -549,21 +562,21 @@ var matter = (function() {
    * @augments PhysicalObject
    * @author Palmer Paul
    */
-  var Block = function(x, y, width, height, options) {
-    var body = Matter.Bodies.rectangle(x, y, width, height, options);
-    PhysicalObject.call(this, body, width, height);
-  };
-  Block.prototype = Object.create(PhysicalObject.prototype);
-  Block.prototype.constructor = Block;
+  var Block = function (x, y, width, height, options) {
+    var body = Matter.Bodies.rectangle(x, y, width, height, options)
+    PhysicalObject.call(this, body, width, height)
+  }
+  Block.prototype = Object.create(PhysicalObject.prototype)
+  Block.prototype.constructor = Block
 
-  Block.prototype.show = function() {
-    push();
-    translate(this.getX(), this.getY());
-    rotate(this.getAngle());
-    rectMode(CENTER);
-    rect(0, 0, this.getWidth(), this.getHeight());
-    pop();
-  };
+  Block.prototype.show = function () {
+    push()
+    translate(this.getX(), this.getY())
+    rotate(this.getAngle())
+    rectMode(CENTER)
+    rect(0, 0, this.getWidth(), this.getHeight())
+    pop()
+  }
 
   /**
    * Represents physics-aware text.
@@ -580,31 +593,30 @@ var matter = (function() {
    * @augments Block
    * @author Palmer Paul
    */
-  var Sign = function(text, x, y, options) {
-    this.text = text;
-    Block.call(this, x, y, textWidth(text), textSize(), options);
-  };
-  Sign.prototype = Object.create(Block.prototype);
-  Sign.prototype.constructor = Sign;
+  var Sign = function (text, x, y, options) {
+    this.text = text
+    Block.call(this, x, y, textWidth(text), textSize(), options)
+  }
+  Sign.prototype = Object.create(Block.prototype)
+  Sign.prototype.constructor = Sign
 
   /**
    * Get the text of the sign.
    *
    * @returns {string}
    */
-  Sign.prototype.getText = function() {
-    return this.text;
-  };
+  Sign.prototype.getText = function () {
+    return this.text
+  }
 
-  Sign.prototype.show = function() {
-    push();
-    translate(this.getX(), this.getY() + this.getHeight() * 0.25);
-    rotate(this.getAngle());
-    textAlign(CENTER);
-    text(this.getText(), 0, 0);
-    pop();
-  };
-
+  Sign.prototype.show = function () {
+    push()
+    translate(this.getX(), this.getY() + this.getHeight() * 0.25)
+    rotate(this.getAngle())
+    textAlign(CENTER)
+    text(this.getText(), 0, 0)
+    pop()
+  }
 
   /**
    * Represents a connection between two physical objects.
@@ -621,12 +633,12 @@ var matter = (function() {
    * @class
    * @author Palmer Paul
    */
-  var Connection = function(constraint, physicalObjectA, physicalObjectB) {
-    this.constraint = constraint;
-    this.physicalObjectA = physicalObjectA;
-    this.physicalObjectB = physicalObjectB;
-    this.active = true;
-  };
+  var Connection = function (constraint, physicalObjectA, physicalObjectB) {
+    this.constraint = constraint
+    this.physicalObjectA = physicalObjectA
+    this.physicalObjectB = physicalObjectB
+    this.active = true
+  }
 
   /**
    * Determine if the connection is being tracked and updated or if it was
@@ -634,45 +646,30 @@ var matter = (function() {
    *
    * @returns {boolean}
    */
-  Connection.prototype.isActive = function() {
-    return this.active;
-  };
+  Connection.prototype.isActive = function () {
+    return this.active
+  }
 
   /**
    * Draw a line between the connected objects.
    */
-  Connection.prototype.show = function() {
-    var aX = this.physicalObjectA.getX();
-    var aY = this.physicalObjectA.getY();
+  Connection.prototype.show = function () {
+    var aX = this.physicalObjectA.getX()
+    var aY = this.physicalObjectA.getY()
     if (this.constraint.pointA) {
-      aX += this.constraint.pointA.x;
-      aY += this.constraint.pointA.y;
+      aX += this.constraint.pointA.x
+      aY += this.constraint.pointA.y
     }
 
-    var bX = this.physicalObjectB.getX();
-    var bY = this.physicalObjectB.getY();
+    var bX = this.physicalObjectB.getX()
+    var bY = this.physicalObjectB.getY()
     if (this.constraint.pointB) {
-      aX += this.constraint.pointB.x;
-      aY += this.constraint.pointB.y;
+      aX += this.constraint.pointB.x
+      aY += this.constraint.pointB.y
     }
 
-    line(aX, aY, bX, bY);
-  };
+    line(aX, aY, bX, bY)
+  }
 
-  return {
-    init: init,
-    makeBall: makeBall,
-    makeBlock: makeBlock,
-    makeBarrier: makeBarrier,
-    makeSign: makeSign,
-    connect: connect,
-    normalGravity: normalGravity,
-    invertedGravity: invertedGravity,
-    zeroGravity: zeroGravity,
-    changeGravity: changeGravity,
-    forget: forget,
-    manualTick: manualTick,
-    mouseInteraction: mouseInteraction
-  };
-
-}());
+  return namespace
+}).call(this, window)
