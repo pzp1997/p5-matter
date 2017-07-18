@@ -47,8 +47,8 @@ function setup() {
 function mousePressed() {
   for (i = 0; i < signs.length; i++) {
     var sign = signs[i];
-    if (2 * abs(mouseX - sign.getX()) <= sign.getWidth() &&
-      2 * abs(mouseY - sign.getY()) <= sign.getHeight()) {
+    if (2 * abs(mouseX - sign.getPositionX()) <= sign.getWidth() &&
+      2 * abs(mouseY - sign.getPositionY()) <= sign.getHeight()) {
       sign.unfreeze();
     }
   }

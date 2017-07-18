@@ -388,18 +388,102 @@
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getX = function () {
-    return this.body.position.x
-  }
+  PhysicalObject.prototype.getPositionX = function() {
+    return this.body.position.x;
+  };
 
   /**
    * Get the current y-coordinate of the object.
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getY = function () {
-    return this.body.position.y
-  }
+  PhysicalObject.prototype.getPositionY = function() {
+    return this.body.position.y;
+  };
+
+  /**
+   * Set the position of the object along both axes.
+   *
+   * @param {number} xPos - The new x-coordinate of the object.
+   * @param {number} yPos - The new y-coordinate of the object.
+   */
+  PhysicalObject.prototype.setPosition = function(xPos, yPos) {
+    Matter.Body.setPosition(this.body, {
+      x: xPos,
+      y: yPos
+    });
+  };
+
+  /**
+   * Set the position of the object only along the x-axis. The position along
+   * the y-axis is unchanged.
+   *
+   * @param {number} xPos - The new x-coordinate of the object.
+   */
+  PhysicalObject.prototype.setPositionX = function(xPos) {
+    this.setPosition(xPos, this.getPositionY());
+  };
+
+  /**
+   * Set the position of the object only along the y-axis. The position along
+   * the x-axis is unchanged.
+   *
+   * @param {number} yPos - The new y-coordinate of the object.
+   */
+  PhysicalObject.prototype.setPositionY = function(yPos) {
+    this.setPosition(this.getPositionX(), yPos);
+  };
+
+  /**
+   * Get the velocity of the object along the x-axis.
+   *
+   * @returns {number}
+   */
+  PhysicalObject.prototype.getVelocityX = function() {
+    return this.body.velocity.x;
+  };
+
+  /**
+   * Get the velocity of the object along the y-axis.
+   *
+   * @returns {number}
+   */
+  PhysicalObject.prototype.getVelocityY = function() {
+    return this.body.velocity.y;
+  };
+
+  /**
+   * Set the velocity of the object along both axes.
+   *
+   * @param {number} xVel - The new velocity of the object along the x-axis.
+   * @param {number} yVel - The new velocity of the object along the y-axis.
+   */
+  PhysicalObject.prototype.setVelocity = function(xVel, yVel) {
+    Matter.Body.setVelocity(this.body, {
+      x: xVel,
+      y: yVel
+    });
+  };
+
+  /**
+   * Set the velocity of the object only along the x-axis. The velocity along
+   * the y-axis is unchanged.
+   *
+   * @param {number} xVel - The new velocity of the object along the x-axis.
+   */
+  PhysicalObject.prototype.setVelocityX = function(xVel) {
+    this.setVelocity(xVel, this.getVelocityY());
+  };
+
+  /**
+   * Set the velocity of the object only along the y-axis. The velocity along
+   * the x-axis is unchanged.
+   *
+   * @param {number} yVel - The new velocity of the object along the y-axis.
+   */
+  PhysicalObject.prototype.setVelocityY = function(yVel) {
+    this.setVelocity(this.getVelocityX(), yVel);
+  };
 
   /**
    * Get the width of the object.
@@ -427,6 +511,15 @@
   PhysicalObject.prototype.getAngle = function () {
     return this.body.angle
   }
+
+  /**
+   * Set the angle of the object in radians.
+   *
+   * @param {number} angle - The new angle of the object.
+   */
+  PhysicalObject.prototype.setAngle = function(angle) {
+    Matter.Body.setAngle(this.body, angle);
+  };
 
   /**
    * Check if the object is frozen, i.e. static.
@@ -460,10 +553,10 @@
   PhysicalObject.prototype.isOffCanvas = function (bufferZone) {
     bufferZone = bufferZone || 0
 
-    var x = this.getX()
-    var y = this.getY()
-    var wid = this.getWidth()
-    var hgt = this.getHeight()
+    var x = this.getPositionX();
+    var y = this.getPositionY();
+    var wid = this.getWidth();
+    var hgt = this.getHeight();
 
     var minX = -(wid + bufferZone)
     var minY = -(hgt + bufferZone)
@@ -495,6 +588,22 @@
   }
 
   /**
+   * @deprecated since 1.1.0. Renamed to <code>getPositionX</code>.
+   */
+  PhysicalObject.prototype.getX = function() {
+    return this.body.position.x;
+  };
+
+
+  /**
+   * @deprecated since 1.1.0. Renamed to <code>getPositionY</code>.
+   */
+  PhysicalObject.prototype.getY = function() {
+    return this.body.position.y;
+  };
+
+
+  /**
    * Represents a circle that obeys physics.
    *
    * The constructor for Ball is private. Use
@@ -518,14 +627,14 @@
   Ball.prototype = Object.create(PhysicalObject.prototype)
   Ball.prototype.constructor = Ball
 
-  Ball.prototype.show = function () {
-    push()
-    translate(this.getX(), this.getY())
-    rotate(this.getAngle())
-    ellipseMode(CENTER)
-    ellipse(0, 0, this.getWidth(), this.getHeight())
-    pop()
-  }
+  Ball.prototype.show = function() {
+    push();
+    translate(this.getPositionX(), this.getPositionY());
+    rotate(this.getAngle());
+    ellipseMode(CENTER);
+    ellipse(0, 0, this.getWidth(), this.getHeight());
+    pop();
+  };
 
   /**
    * Get the diameter of the ball. Alias for
@@ -569,14 +678,14 @@
   Block.prototype = Object.create(PhysicalObject.prototype)
   Block.prototype.constructor = Block
 
-  Block.prototype.show = function () {
-    push()
-    translate(this.getX(), this.getY())
-    rotate(this.getAngle())
-    rectMode(CENTER)
-    rect(0, 0, this.getWidth(), this.getHeight())
-    pop()
-  }
+  Block.prototype.show = function() {
+    push();
+    translate(this.getPositionX(), this.getPositionY());
+    rotate(this.getAngle());
+    rectMode(CENTER);
+    rect(0, 0, this.getWidth(), this.getHeight());
+    pop();
+  };
 
   /**
    * Represents physics-aware text.
@@ -605,9 +714,19 @@
    *
    * @returns {string}
    */
-  Sign.prototype.getText = function () {
-    return this.text
-  }
+  Sign.prototype.getText = function() {
+    return this.text;
+  };
+
+  Sign.prototype.show = function() {
+    push();
+    translate(this.getPositionX(),
+      this.getPositionY() + this.getHeight() * 0.25);
+    rotate(this.getAngle());
+    textAlign(CENTER);
+    text(this.getText(), 0, 0);
+    pop();
+  };
 
   Sign.prototype.show = function () {
     push()
@@ -653,16 +772,16 @@
   /**
    * Draw a line between the connected objects.
    */
-  Connection.prototype.show = function () {
-    var aX = this.physicalObjectA.getX()
-    var aY = this.physicalObjectA.getY()
+  Connection.prototype.show = function() {
+    var aX = this.physicalObjectA.getPositionX();
+    var aY = this.physicalObjectA.getPositionY();
     if (this.constraint.pointA) {
       aX += this.constraint.pointA.x
       aY += this.constraint.pointA.y
     }
 
-    var bX = this.physicalObjectB.getX()
-    var bY = this.physicalObjectB.getY()
+    var bX = this.physicalObjectB.getPositionX();
+    var bY = this.physicalObjectB.getPositionY();
     if (this.constraint.pointB) {
       aX += this.constraint.pointB.x
       aY += this.constraint.pointB.y

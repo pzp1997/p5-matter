@@ -21,9 +21,10 @@ function setup() {
 function draw() {
   background(0, 0, 64);
 
-  var theta = atan2(mouseY - moon.getY(), mouseX - moon.getX());
+  var theta = atan2(mouseY - moon.getPositionY(),
+    mouseX - moon.getPositionX());
   matter.changeGravity(cos(theta), sin(theta));
 
   image(earthImg, mouseX, mouseY);
-  image(moonImg, moon.getX(), moon.getY());
+  image(moonImg, moon.getPositionX(), moon.getPositionY());
 }

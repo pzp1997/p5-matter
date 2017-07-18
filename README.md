@@ -48,6 +48,8 @@ Everything you can do as a user of p5-matter exists in the global `matter` objec
 **Flip Gravity** - Change the direction of gravity by clicking your mouse.<br>
 [See it live!](http://palmerpaul.com/p5-matter/examples/flip-gravity) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/flip-gravity/flip-gravity.js)
 
+**Flappy Bird** - Skeleton for a flappy birds style game. Press the mouse to jump.<br>[See it live!](http://palmerpaul.com/p5-matter/examples/flappy-bird) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/flappy-bird/flappy-bird.js)
+
 **Falling Ball** - Simple simulation of a ball falling with gravity.<br>
 [See it live!](http://palmerpaul.com/p5-matter/examples/falling-ball) &mdash; [View source code.](https://github.com/pzp1997/p5-matter/blob/master/examples/falling-ball/falling-ball.js)
 

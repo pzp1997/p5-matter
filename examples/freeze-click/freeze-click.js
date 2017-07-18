@@ -22,7 +22,8 @@ function addBall() {
 function mousePressed() {
   for (var i = 0; i < balls.length; i++) {
     var ball = balls[i];
-    if (dist(mouseX, mouseY, ball.getX(), ball.getY()) <= ball.getRadius()) {
+    var d = dist(mouseX, mouseY, ball.getPositionX(), ball.getPositionY());
+    if (d <= ball.getRadius()) {
       if (ball.isFrozen()) {
         ball.unfreeze();
       } else {
