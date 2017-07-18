@@ -539,8 +539,8 @@ var matter = (function() {
   PhysicalObject.prototype.isOffCanvas = function(bufferZone) {
     bufferZone = bufferZone || 0;
 
-    var x = this.getX();
-    var y = this.getY();
+    var x = this.getPositionX();
+    var y = this.getPositionY();
     var wid = this.getWidth();
     var hgt = this.getHeight();
 
@@ -600,7 +600,7 @@ var matter = (function() {
 
   Ball.prototype.show = function() {
     push();
-    translate(this.getX(), this.getY());
+    translate(this.getPositionX(), this.getPositionY());
     rotate(this.getAngle());
     ellipseMode(CENTER);
     ellipse(0, 0, this.getWidth(), this.getHeight());
@@ -651,7 +651,7 @@ var matter = (function() {
 
   Block.prototype.show = function() {
     push();
-    translate(this.getX(), this.getY());
+    translate(this.getPositionX(), this.getPositionY());
     rotate(this.getAngle());
     rectMode(CENTER);
     rect(0, 0, this.getWidth(), this.getHeight());
@@ -691,7 +691,8 @@ var matter = (function() {
 
   Sign.prototype.show = function() {
     push();
-    translate(this.getX(), this.getY() + this.getHeight() * 0.25);
+    translate(this.getPositionX(),
+      this.getPositionY() + this.getHeight() * 0.25);
     rotate(this.getAngle());
     textAlign(CENTER);
     text(this.getText(), 0, 0);
@@ -735,15 +736,15 @@ var matter = (function() {
    * Draw a line between the connected objects.
    */
   Connection.prototype.show = function() {
-    var aX = this.physicalObjectA.getX();
-    var aY = this.physicalObjectA.getY();
+    var aX = this.physicalObjectA.getPositionX();
+    var aY = this.physicalObjectA.getPositionY();
     if (this.constraint.pointA) {
       aX += this.constraint.pointA.x;
       aY += this.constraint.pointA.y;
     }
 
-    var bX = this.physicalObjectB.getX();
-    var bY = this.physicalObjectB.getY();
+    var bX = this.physicalObjectB.getPositionX();
+    var bY = this.physicalObjectB.getPositionY();
     if (this.constraint.pointB) {
       aX += this.constraint.pointB.x;
       aY += this.constraint.pointB.y;
