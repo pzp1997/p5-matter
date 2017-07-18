@@ -421,6 +421,57 @@ var matter = (function() {
   };
 
   /**
+   * Get the velocity of the object along the x-axis.
+   *
+   * @returns {number}
+   */
+  PhysicalObject.prototype.getVelocityX = function() {
+    return this.body.velocity.x;
+  };
+
+  /**
+   * Get the velocity of the object along the y-axis.
+   *
+   * @returns {number}
+   */
+  PhysicalObject.prototype.getVelocityY = function() {
+    return this.body.velocity.y;
+  };
+
+  /**
+   * Set the velocity of the object along both axes.
+   *
+   * @param {number} xVel - The new velocity of the object along the x-axis.
+   * @param {number} yVel - The new velocity of the object along the y-axis.
+   */
+  PhysicalObject.prototype.setVelocity = function(xVel, yVel) {
+    Matter.Body.setVelocity(this.body, {
+      x: xVel,
+      y: yVel
+    });
+  };
+
+  /**
+   * Set the velocity of the object only along the x-axis. The velocity along
+   * the y-axis is unchanged.
+   *
+   * @param {number} xVel - The new velocity of the object along the x-axis.
+   */
+  PhysicalObject.prototype.setVelocityX = function(xVel) {
+    this.setVelocity(xVel, this.getVelocityY());
+  };
+
+  /**
+   * Set the velocity of the object only along the y-axis. The velocity along
+   * the x-axis is unchanged.
+   *
+   * @param {number} yVel - The new velocity of the object along the y-axis.
+   */
+  PhysicalObject.prototype.setVelocityY = function(yVel) {
+    this.setVelocity(this.getVelocityX(), yVel);
+  };
+
+  /**
    * Get the width of the object.
    *
    * @returns {number}
