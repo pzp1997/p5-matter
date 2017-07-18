@@ -388,6 +388,39 @@ var matter = (function() {
   };
 
   /**
+   * Set the position of the object along both axes.
+   *
+   * @param {number} xPos - The new x-coordinate of the object.
+   * @param {number} yPos - The new y-coordinate of the object.
+   */
+  PhysicalObject.prototype.setPosition = function(xPos, yPos) {
+    Matter.Body.setPosition(this.body, {
+      x: xPos,
+      y: yPos
+    });
+  };
+
+  /**
+   * Set the position of the object only along the x-axis. The position along
+   * the y-axis is unchanged.
+   *
+   * @param {number} xPos - The new x-coordinate of the object.
+   */
+  PhysicalObject.prototype.setPositionX = function(xPos) {
+    this.setPosition(xPos, this.getPositionY());
+  };
+
+  /**
+   * Set the position of the object only along the y-axis. The position along
+   * the x-axis is unchanged.
+   *
+   * @param {number} yPos - The new y-coordinate of the object.
+   */
+  PhysicalObject.prototype.setPositionY = function(yPos) {
+    this.setPosition(this.getPositionX(), yPos);
+  };
+
+  /**
    * Get the width of the object.
    *
    * @returns {number}
