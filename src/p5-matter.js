@@ -374,7 +374,7 @@ var matter = (function() {
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getX = function() {
+  PhysicalObject.prototype.getPositionX = function() {
     return this.body.position.x;
   };
 
@@ -383,7 +383,7 @@ var matter = (function() {
    *
    * @returns {number}
    */
-  PhysicalObject.prototype.getY = function() {
+  PhysicalObject.prototype.getPositionY = function() {
     return this.body.position.y;
   };
 
