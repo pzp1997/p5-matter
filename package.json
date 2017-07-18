@@ -1,6 +1,6 @@
 {
   "name": "p5-matter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Seamlessly integrate matter.js with p5.js",
   "scripts": {
     "build": "npm run minify & npm run generate-docs",
