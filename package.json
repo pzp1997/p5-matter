@@ -1,10 +1,11 @@
 {
   "name": "p5-matter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Seamlessly integrate matter.js with p5.js",
   "scripts": {
+    "build": "npm run minify & npm run generate-docs",
     "minify": "uglifyjs --keep-fnames --source-map --output src/p5-matter.min.js src/p5-matter.js",
-    "build-docs": "documentation build src/p5-matter.js -f html -o docs/"
+    "generate-docs": "documentation build src/p5-matter.js -f html -o docs/"
   },
   "main": "src/p5-matter.js",
   "author": "Palmer Paul <pzpaul2002@yahoo.com>",

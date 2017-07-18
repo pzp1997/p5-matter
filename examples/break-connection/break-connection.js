@@ -13,7 +13,8 @@ function setup() {
   ball2 = matter.makeBall(random(0, width), random(0, height * 0.2), 70);
   connection = matter.connect(ball1, ball2, {
     stiffness: 0.005,
-    length: 0.7 * dist(ball1.getX(), ball1.getY(), ball2.getX(), ball2.getY())
+    length: 0.7 * dist(ball1.getPositionX(), ball1.getPositionY(),
+      ball2.getPositionX(), ball2.getPositionY())
   });
 
   floor = matter.makeBarrier(width / 2, height + 50, width, 100);

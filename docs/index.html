@@ -178,15 +178,63 @@
                       <li class='h5'><span>Instance members</span></li>
                       
                       <li><a
-                        href='#PhysicalObject#getX'
+                        href='#PhysicalObject#getPositionX'
                         class='regular pre-open'>
-                        #getX
+                        #getPositionX
                       </a></li>
                       
                       <li><a
-                        href='#PhysicalObject#getY'
+                        href='#PhysicalObject#getPositionY'
                         class='regular pre-open'>
-                        #getY
+                        #getPositionY
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#setPosition'
+                        class='regular pre-open'>
+                        #setPosition
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#setPositionX'
+                        class='regular pre-open'>
+                        #setPositionX
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#setPositionY'
+                        class='regular pre-open'>
+                        #setPositionY
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#getVelocityX'
+                        class='regular pre-open'>
+                        #getVelocityX
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#getVelocityY'
+                        class='regular pre-open'>
+                        #getVelocityY
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#setVelocity'
+                        class='regular pre-open'>
+                        #setVelocity
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#setVelocityX'
+                        class='regular pre-open'>
+                        #setVelocityX
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#setVelocityY'
+                        class='regular pre-open'>
+                        #setVelocityY
                       </a></li>
                       
                       <li><a
@@ -205,6 +253,12 @@
                         href='#PhysicalObject#getAngle'
                         class='regular pre-open'>
                         #getAngle
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#setAngle'
+                        class='regular pre-open'>
+                        #setAngle
                       </a></li>
                       
                       <li><a
@@ -241,6 +295,18 @@
                         href='#PhysicalObject#show'
                         class='regular pre-open'>
                         #show
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#getX'
+                        class='regular pre-open'>
+                        #getX
+                      </a></li>
+                      
+                      <li><a
+                        href='#PhysicalObject#getY'
+                        class='regular pre-open'>
+                        #getY
                       </a></li>
                       
                     </ul>
@@ -1553,11 +1619,11 @@ create instances of it. You do not need to worry about this though.</p>
     <div class='py1 quiet mt1 prose-big'>Instance Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='PhysicalObject#getX'>
+    <div class='border-bottom' id='PhysicalObject#getPositionX'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getX()</span>
+            <span class='code strong strong truncate'>getPositionX()</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1568,7 +1634,7 @@ create instances of it. You do not need to worry about this though.</p>
   <p>Get the current x-coordinate of the object.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getX(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  <div class='pre p1 fill-light mt0'>getPositionX(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
   
 
@@ -1607,11 +1673,11 @@ create instances of it. You do not need to worry about this though.</p>
       </div>
     </div>
   
-    <div class='border-bottom' id='PhysicalObject#getY'>
+    <div class='border-bottom' id='PhysicalObject#getPositionY'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getY()</span>
+            <span class='code strong strong truncate'>getPositionY()</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -1622,7 +1688,7 @@ create instances of it. You do not need to worry about this though.</p>
   <p>Get the current y-coordinate of the object.</p>
 
 
-  <div class='pre p1 fill-light mt0'>getY(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  <div class='pre p1 fill-light mt0'>getPositionY(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
   
   
 
@@ -1645,6 +1711,496 @@ create instances of it. You do not need to worry about this though.</p>
 
       
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#setPosition'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setPosition(xPos, yPos)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the position of the object along both axes.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setPosition(xPos: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, yPos: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>xPos</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new x-coordinate of the object.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>yPos</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new y-coordinate of the object.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#setPositionX'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setPositionX(xPos)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the position of the object only along the x-axis. The position along
+the y-axis is unchanged.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setPositionX(xPos: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>xPos</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new x-coordinate of the object.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#setPositionY'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setPositionY(yPos)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the position of the object only along the y-axis. The position along
+the x-axis is unchanged.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setPositionY(yPos: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>yPos</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new y-coordinate of the object.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#getVelocityX'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getVelocityX()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Get the velocity of the object along the x-axis.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getVelocityX(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#getVelocityY'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getVelocityY()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Get the velocity of the object along the y-axis.</p>
+
+
+  <div class='pre p1 fill-light mt0'>getVelocityY(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>:
+        
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#setVelocity'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setVelocity(xVel, yVel)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the velocity of the object along both axes.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setVelocity(xVel: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, yVel: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>xVel</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new velocity of the object along the x-axis.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>yVel</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new velocity of the object along the y-axis.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#setVelocityX'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setVelocityX(xVel)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the velocity of the object only along the x-axis. The velocity along
+the y-axis is unchanged.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setVelocityX(xVel: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>xVel</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new velocity of the object along the x-axis.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#setVelocityY'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setVelocityY(yVel)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the velocity of the object only along the y-axis. The velocity along
+the x-axis is unchanged.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setVelocityY(yVel: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>yVel</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new velocity of the object along the y-axis.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
   
 
   
@@ -1807,6 +2363,66 @@ create instances of it. You do not need to worry about this though.</p>
 
       
     
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#setAngle'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>setAngle(angle)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Set the angle of the object in radians.</p>
+
+
+  <div class='pre p1 fill-light mt0'>setAngle(angle: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>angle</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    The new angle of the object.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
   
 
   
@@ -2114,6 +2730,106 @@ this is optional, feel free to draw the objects however you would like.</p>
   
 
   
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#getX'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getX()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>getX()</div>
+  
+  
+
+  <div>Deprecated: since 1.1.0. Renamed to 
+<code>
+getPositionX
+</code>
+.
+</div>
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='PhysicalObject#getY'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>getY()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>getY()</div>
+  
+  
+
+  <div>Deprecated: since 1.1.0. Renamed to 
+<code>
+getPositionY
+</code>
+.
+</div>
   
   
   
