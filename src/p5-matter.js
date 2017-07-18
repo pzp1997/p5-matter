@@ -575,6 +575,22 @@ var matter = (function() {
 
 
   /**
+   * @deprecated since 1.1.0. Renamed to <code>getPositionX</code>.
+   */
+  PhysicalObject.prototype.getX = function() {
+    return this.body.position.x;
+  };
+
+
+  /**
+   * @deprecated since 1.1.0. Renamed to <code>getPositionY</code>.
+   */
+  PhysicalObject.prototype.getY = function() {
+    return this.body.position.y;
+  };
+
+
+  /**
    * Represents a circle that obeys physics.
    *
    * The constructor for Ball is private. Use
