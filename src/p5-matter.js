@@ -499,6 +499,15 @@ var matter = (function() {
   };
 
   /**
+   * Set the angle of the object in radians.
+   *
+   * @param {number} angle - The new angle of the object.
+   */
+  PhysicalObject.prototype.setAngle = function(angle) {
+    Matter.Body.setAngle(this.body, angle);
+  };
+
+  /**
    * Check if the object is frozen, i.e. static.
    *
    * @return {boolean}
